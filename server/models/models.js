@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-mongoose.connect("mongodb://localhost:27017/chapp",{useNewUrlParser:true},(errs)=>console.log(errs));
+mongoose.connect("mongodb://localhost:27017/chappy",{useNewUrlParser:true},(errs)=>console.log(errs));
 
 
 const UserSchema = new mongoose.Schema({
     username: {
         type: String,
-        unique: true,
+        // unique: true,
         minlength: [3,"Username must be atleast 3 characters long"]
     },
     first_name: {
@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true,"Email required"],
-        unique: true,
+        // unique: true,
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Email is invalid"]
     },
     password: {
@@ -46,7 +46,8 @@ const UserSchema = new mongoose.Schema({
 UserSchema.plugin(uniqueValidator, {message: '{PATH} {VALUE} is already taken'});
 
 const MessageSchema = new mongoose.Schema({
-    user: UserSchema,
+    userName: String,
+    userAvatar: String,
     content: {
         type: String,
         minlength: 1,
@@ -63,7 +64,7 @@ const TextChannelSchema = new mongoose.Schema({
     },
     port: {
         type: Number,
-        required: [true, "Text channel requires a port"]
+        required: [false, "Text channel requires a port"]
     },
     messages: [MessageSchema]
 },{timestamps:true});
@@ -76,12 +77,13 @@ const VoiceChannelSchema = new mongoose.Schema({
     },
     port: {
         type: Number,
-        required: [true, "Voice channel requires a port"]
+        required: [false, "Voice channel requires a port"]
     },
-    connectedUesrs: [UserSchema]
+    connectedUsers: [UserSchema]
 },{timestamps:true});
 
 const ChannelSchema = new mongoose.Schema({
+    channelName: String,
     users: [UserSchema],
     textChannels: [TextChannelSchema],
     voiceChannels: [VoiceChannelSchema]
