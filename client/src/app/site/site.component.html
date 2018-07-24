@@ -1,3 +1,29 @@
-<p>
-  site works!
-</p>
+<div class="container">
+
+  <!-- Navigation -->
+  <div class="row">
+    <div class="nav">
+
+      <!-- LOGO -->
+      <div class="logo">
+        <a [routerLink]="['splash']"><h1>Chappy</h1></a>
+      </div>
+
+      <!-- LINKS -->
+      <div class="nav-links">
+        <a [routerLink]="['login']">
+          <button>Login</button>
+        </a>
+        <a [routerLink]="['registration']">
+          <button>Registration</button>
+        </a>
+        <a [routerLink]="['/chapp']">
+          <button>Open</button>
+        </a>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
