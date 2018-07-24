@@ -8,8 +8,11 @@ function router(app) {
 
     });
 
-    // Create user
+    // Register user
     app.post("/api/users",api.createUser);
+
+    //Login user
+    app.post("/api/users/login",api.loginUser);
 
     // Get users
     app.get("/api/users",api.getAllUsers);
