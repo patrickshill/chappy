@@ -5,8 +5,10 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HttpService {
-  logged = false;
-  user_id = "";
+
+
+  user_id= '5b5698d660d0e02012da5e1e';
+
   constructor(private _http: HttpClient) { }
 
   createUser(data){
