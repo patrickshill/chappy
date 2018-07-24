@@ -1,6 +1,6 @@
 const models = require("../models/models");
 
-// Create pet document w/Unique validation
+// Create user document w/Unique validation && registration
 function createUser(req,res) {
     models.Users.create(req.body)
         .then(data=>res.json(data))
@@ -26,6 +26,34 @@ function updateUser(req,res) {
     models.Users.findOneAndUpdate({_id:req.params.id},req.body, {runValidators:true, context: 'query'})
         .then(data=>res.json(data))
         .catch(errs=>res.json(errs));
+}
+
+// User login validation
+function loginUser(req,res) {
+    console.log("yo")
+    models.Users.findOne({email: req.body.email})
+    .then(data=>{
+        console.log(data);
+        if(data == null) {
+            res.json({
+                errors: {
+                    message: "borked"
+                }
+            });
+        } else {
+            //Validate password
+            if(data.password != req.body.password) {
+                res.json({
+                    errors: {
+                        message: "invalid password"
+                    }
+                });
+            } else {
+                res.json(data);
+            }
+        }
+    })
+    .catch(errs=>res.json(errs));
 }
 
 // Add friend/dm_channel/channel to User
@@ -303,6 +331,7 @@ function updateVoiceChannel(req,res) {
 
 module.exports = {
     createUser: createUser,
+    loginUser: loginUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
     updateUser: updateUser,

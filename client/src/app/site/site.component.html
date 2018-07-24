@@ -6,24 +6,60 @@
 
       <!-- LOGO -->
       <div class="logo">
-        <a [routerLink]="['splash']"><h1>Chappy</h1></a>
+        <a id="logo-text" [routerLink]="['splash']"><h1 >Chappy</h1></a>
       </div>
 
       <!-- LINKS -->
       <div class="nav-links">
-        <a [routerLink]="['login']">
-          <button>Login</button>
-        </a>
-        <a [routerLink]="['registration']">
-          <button>Registration</button>
-        </a>
         <a [routerLink]="['/chapp']">
-          <button>Open</button>
+          <button class="btn-nav btn-app">Open</button>
         </a>
+        <!-- <a [routerLink]="['login']"> -->
+          <button (click)="showLoginModal()" class="btn-nav btn-primary">Login</button>
+        <!-- </a> -->
+        <!-- <a [routerLink]="['registration']"> -->
+          <button (click)="showRegistrationModal()" class="btn-nav btn-secondary">Registration</button>
+        <!-- </a> -->
       </div>
       
       
     </div>
   </div>
 </div>
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+
+<div *ngIf="showRegistration" class="registration-modal-fade">
+  <div class="registration-modal-form">
+    <span (click)="hideRegistrationModal()" class="close-modal">X</span>
+    <h1>Register</h1>
+    <form (submit)="userRegistration()">
+      <p>Username:</p>
+      <p><input type="text" autocomplete="off" name="regForm.username" [(ngModel)]="regForm.username"></p>
+      <p>First name:</p>
+      <p><input type="text" autocomplete="off" name="regForm.first_name" [(ngModel)]="regForm.first_name"></p>
+      <p>Last name:</p>
+      <p><input type="text" autocomplete="off" name="regForm.last_name" [(ngModel)]="regForm.last_name"></p>
+      <p>Email:</p>
+      <p><input type="text" autocomplete="off" name="regForm.email" [(ngModel)]="regForm.email"></p>
+      <p>Password:</p>
+      <p><input type="password" name="regForm.password" [(ngModel)]="regForm.password"></p>
+      <p>Confirm password:</p>
+      <p><input type="password" name="password_confirm"></p>
+      <p><input class="btn btn-primary" type="submit" value="Register"></p>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="showLogin" class="login-modal-fade">
+  <div class="login-modal-form">
+    <span (click)="hideLoginModal()" class="close-modal">X</span>
+    <h1>Login</h1>
+    <form (submit)="userLogin()">
+      <p>Email:</p>
+      <p><input type="text" name="loginForm.email" [(ngModel)]="loginForm.email"></p>
+      <p>Password:</p>
+      <p><input type="password" name="loginForm.password" [(ngModel)]="loginForm.password"></p>
+      <p><input class="btn btn-primary" type="submit" value="Login"></p>
+    </form>
+  </div>
+</div>
