@@ -7,4 +7,73 @@ import { HttpClient } from '@angular/common/http';
 export class HttpService {
 
   constructor(private _http: HttpClient) { }
+
+  createUser(data){
+    this._http.post("/api/users", data);
+  }
+
+  getAllUsers(){
+    this._http.get("/api/users");
+  }
+
+  getOneUser(id){
+    this._http.get("/api/users/"+id);
+  }
+
+  updateUser(id, data){
+    this._http.post("/api/users/addTo/"+id, data);
+  }
+
+  removeFromUser(id, data){
+    this._http.post("/api/users/removeFrom/"+id, data);
+  }
+
+  removeUser(id){
+    this._http.delete("/api/users/"+id);
+  }
+
+  // Channel routes
+
+  createChannel(id, data){
+    this._http.post("/api/channels/new/"+id, data);
+  }
+
+  getAllChannels(){
+    this._http.get("/api/channels");
+  }
+
+  getOneChannel(id){
+    this._http.get("/api/channels/"+id);
+  }
+
+  addToChannel(id, data){
+    this._http.patch("/api/channels/update/"+id, data);
+  }
+
+  removeFromChannel(id, data){
+    this._http.patch("/api/channels/remove/"+id, data)
+  }
+
+  removeChannel(id){
+    this._http.delete("/api/channels/delete/"+id);
+  }
+
+  // Text Sub Channel Routes
+
+  createTextChannel(data){
+    this._http.post("/api/textchannels/new", data);
+  }
+
+  getAllText(){
+    this._http.get("/api/textchannels");
+  }
+
+  getOneText(id){
+    this._http.get("/api/textchannels/"+id);
+  }
+
+  updateTextChannel(id, data){
+    this._http.post("/api/textchannels/update/"+id, data);
+  }
+
 }
