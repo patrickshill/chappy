@@ -241,3 +241,29 @@
     height: calc(100vh - 60px);
     background-color: rgb(46, 44, 48);
 }
+
+.channel-button {
+    display: block;
+    border-radius: 50%;
+    height: 9vh;
+    width: 80%;
+    background-color: grey;
+    color: white;
+    margin: auto;
+}
+.horizontal-plus {
+    position: relative;
+    background-color: #FFFFFF;
+    width: 50%;
+    height: 12.5%;
+    left: 25%;
+    top: 43.75%;
+}
+.vertical-plus {
+    position: absolute;
+    background-color: #FFFFFF;
+    width: 12.5%;
+    height: 50%;
+    left: 43.75%;
+    top: 25%;
+}

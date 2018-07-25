@@ -5,78 +5,89 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HttpService {
+  logged = false;
+  user = {
+    id: '',
+    username: '',
+    email: '',
+    avatar: '',
+    status: '',
+    channels: [],
+    dm_channels: [],
+    friendsList: []
+  };
 
+  channel_id: any;
+  sub_id: any;
 
-  user_id= '5b5698d660d0e02012da5e1e';
-
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   createUser(data){
-    this._http.post("/api/users", data);
+    return this._http.post("/api/users", data);
   }
 
   getAllUsers(){
-    this._http.get("/api/users");
+    return this._http.get("/api/users");
   }
 
   getOneUser(id){
-    this._http.get("/api/users/"+id);
+    return this._http.get("/api/users/"+id);
   }
 
-  updateUser(id, data){
-    this._http.post("/api/users/addTo/"+id, data);
+  updateUser(data){
+    return this._http.post("/api/users/addTo", data);
   }
 
-  removeFromUser(id, data){
-    this._http.post("/api/users/removeFrom/"+id, data);
+  removeFromUser(data){
+    return this._http.post("/api/users/removeFrom", data);
   }
 
   removeUser(id){
-    this._http.delete("/api/users/"+id);
+    return this._http.delete("/api/users/"+id);
   }
 
   // Channel routes
 
-  createChannel(id, data){
-    this._http.post("/api/channels/new/"+id, data);
+  createChannel(data){
+    return this._http.post("/api/channels/new", data);
   }
 
   getAllChannels(){
-    this._http.get("/api/channels");
+    return this._http.get("/api/channels");
   }
 
   getOneChannel(id){
-    this._http.get("/api/channels/"+id);
+    return this._http.get("/api/channels/"+id);
   }
 
   addToChannel(id, data){
-    this._http.patch("/api/channels/update/"+id, data);
+    return this._http.patch("/api/channels/update/"+id, data);
   }
 
   removeFromChannel(id, data){
-    this._http.patch("/api/channels/remove/"+id, data)
+    return this._http.patch("/api/channels/remove/"+id, data)
   }
 
   removeChannel(id){
-    this._http.delete("/api/channels/delete/"+id);
+    return this._http.delete("/api/channels/delete/"+id);
   }
 
   // Text Sub Channel Routes
 
   createTextChannel(data){
-    this._http.post("/api/textchannels/new", data);
+    return this._http.post("/api/textchannels/new", data);
   }
 
   getAllText(){
-    this._http.get("/api/textchannels");
+    return this._http.get("/api/textchannels");
   }
 
   getOneText(id){
-    this._http.get("/api/textchannels/"+id);
+    return this._http.get("/api/textchannels/"+id);
   }
 
   updateTextChannel(id, data){
-    this._http.post("/api/textchannels/update/"+id, data);
+    return this._http.post("/api/textchannels/update/"+id, data);
   }
 
   // User registration
@@ -89,4 +100,24 @@ export class HttpService {
     console.log(loginForm);
     return this._http.post("/api/users/login", loginForm);
   }
+
+  // Update current state of user
+  currentUserUpdate(){
+    let user = this.getOneUser(this.user['id']);
+    user.subscribe(data => {
+      this.user = {
+        id: data["_id"],
+        username: data["username"],
+        email: data["email"],
+        avatar: data["avatar"],
+        status: data["status"],
+        channels: data["channels"],
+        dm_channels: data["dm_channels"],
+        friendsList: data["friendsList"]
+      };
+      return data;
+    });
+
+  };
+
 }

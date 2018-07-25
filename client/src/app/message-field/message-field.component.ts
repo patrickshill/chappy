@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
 export class MessageFieldComponent implements OnInit {
 
   message: FormGroup;
-  id = this._httpService.user_id;
+  id = this._httpService.user.id;
   channel_id: any;
   errors: any;
 
@@ -37,6 +37,7 @@ export class MessageFieldComponent implements OnInit {
 
   sendMessage(post){
     console.log(post);
+    
   }
 
 }

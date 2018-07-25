@@ -24,10 +24,10 @@ function router(app) {
     app.post("/api/users/:id",api.updateUser);
 
     // Add friend/dm_channel/channel group
-    app.post("/api/users/addTo/:id", api.addAnything)
+    app.post("/api/users/addTo", api.addAnything)
 
     // Remove friend/dm_channel/channel group
-    app.post("/api/users/removeFrom/:id", api.removeAnything)
+    app.post("/api/users/removeFrom", api.removeAnything)
 
     // Remove user
     app.delete("/api/users/:id",api.removeUser);
@@ -37,7 +37,7 @@ function router(app) {
 
 
     // Create Channel Group
-    app.post("/api/channels/new/:id",api.createChannel);
+    app.post("/api/channels/new", api.createChannel);
 
     // Get Channel Groups
     app.get("/api/channels", api.getChannelGroups);
