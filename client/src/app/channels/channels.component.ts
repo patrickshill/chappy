@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { SubChannelsComponent } from '../sub-channels/sub-channels.component';
-import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-channels',
@@ -14,7 +15,11 @@ export class ChannelsComponent implements OnInit {
   channel: any;
   abb_channel: Object[];
 
-  constructor(private _httpService: HttpService, private _route: Router, private _router: ActivatedRoute) {}
+  constructor(
+    private _httpService: HttpService,
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) {}
 
   ngOnInit() {
     this.updateUser();
