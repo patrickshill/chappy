@@ -115,7 +115,6 @@ export class HttpService {
         dm_channels: data["dm_channels"],
         friendsList: data["friendsList"]
       };
-      return data;
     });
 
   };

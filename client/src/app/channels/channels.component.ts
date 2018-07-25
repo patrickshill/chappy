@@ -10,17 +10,15 @@ import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
 })
 export class ChannelsComponent implements OnInit {
 
-  user: any;
+  user = this._httpService.user;
   channel: any;
   abb_channel: Object[];
 
   constructor(private _httpService: HttpService, private _route: Router, private _router: ActivatedRoute) {}
 
   ngOnInit() {
-    // this._httpService.currentUserUpdate();
-    this.user = this._httpService.user;
     this.updateUser();
-    this.AbbreviateChannels();
+    this.user = this._httpService.user;
   }
 
   // Adding channel group and running service method to update user info
@@ -31,17 +29,15 @@ export class ChannelsComponent implements OnInit {
     }
     let new_channel = this._httpService.createChannel(genericData);
     new_channel.subscribe(data => {
-      console.log("New channel is",data)
       this.ngOnInit();
     });
-    // this.ngOnInit();
     
   }
   
   updateUser(){
     let obs = this._httpService.getOneUser(this._httpService.user.id);
     obs.subscribe(data=>{
-      this.user = this.user = {
+      this._httpService.user = {
           id: data["_id"],
           username: data["username"],
           email: data["email"],
@@ -51,7 +47,7 @@ export class ChannelsComponent implements OnInit {
           dm_channels: data["dm_channels"],
           friendsList: data["friendsList"]
         };
-      console.log("User has been updated",this.user);
+        this.AbbreviateChannels();
     })
   }
 
@@ -59,7 +55,6 @@ export class ChannelsComponent implements OnInit {
   AbbreviateChannels(){
     this.abb_channel = [];
     for (var x of this._httpService.user.channels){
-      // console.log(x);
       this.abb_channel.push(
         {
           name: x["channelName"].match(/\b\w/g).join(''),
@@ -67,7 +62,6 @@ export class ChannelsComponent implements OnInit {
         }
       );
     }
-    console.log(this.abb_channel);
     return this.abb_channel;
   }
 
