@@ -21,6 +21,9 @@ export class HttpService {
   channel_id: any;
   sub_id: any;
 
+  subComponent: any;
+  bizComponent: any;
+
   constructor(private _http: HttpClient) {}
 
   createUser(data){
@@ -98,15 +101,19 @@ export class HttpService {
   
   // User login
   userLogin(loginForm) {
-    console.log(loginForm);
     return this._http.post("/api/users/login", loginForm);
   }
 
   // Update current state of user
   showSub(id){
     this.channel_id = id;
+    this.subComponent.ngOnInit();
+  };
 
-    console.log(this.channel_id);
+  subChat(id){
+    this.sub_id = id;
+    this.bizComponent.ngOnInit();
+    console.log(this.sub_id);
   };
 
 }

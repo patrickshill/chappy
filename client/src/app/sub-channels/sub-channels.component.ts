@@ -8,7 +8,9 @@ import { HttpService } from '../http.service';
 })
 export class SubChannelsComponent implements OnInit {
 
-  constructor(private _httpService: HttpService) {}
+  constructor(private _httpService: HttpService) {
+    this._httpService.subComponent = this;
+  }
 
   subchannels: Object[];
   textchannels: Object[];
@@ -54,8 +56,7 @@ export class SubChannelsComponent implements OnInit {
 
   // Pass Sub ID to Service for biz
   passSub(id){
-    this._httpService.sub_id = id;
-    // console.log(this._httpService.sub_id);
+    this._httpService.subChat(id);
   }
 
 }

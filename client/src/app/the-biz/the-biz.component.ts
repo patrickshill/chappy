@@ -10,7 +10,9 @@ export class TheBizComponent implements OnInit {
 
   messages: Object[];
 
-  constructor(private _httpService: HttpService) {}
+  constructor(private _httpService: HttpService) {
+    this._httpService.bizComponent = this;
+  }
 
   ngOnInit() {
     this.getMessages();
