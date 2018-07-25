@@ -17,19 +17,6 @@ export class ChannelsComponent implements OnInit {
   constructor(private _httpService: HttpService, private _route: Router, private _router: ActivatedRoute) {}
 
   ngOnInit() {
-    // let service = this._httpService.getOneUser(id);
-    // service.subscribe(data => {
-    //   this.user = this.user = {
-    //     id: data["_id"],
-    //     username: data["username"],
-    //     email: data["email"],
-    //     avatar: data["avatar"],
-    //     status: data["status"],
-    //     channels: data["channels"],
-    //     dm_channels: data["dm_channels"],
-    //     friendsList: data["friendsList"]
-    //   };
-    // })
     // this._httpService.currentUserUpdate();
     this.user = this._httpService.user;
     this.updateUser();
@@ -54,7 +41,16 @@ export class ChannelsComponent implements OnInit {
   updateUser(){
     let obs = this._httpService.getOneUser(this._httpService.user.id);
     obs.subscribe(data=>{
-      this.user = data;
+      this.user = this.user = {
+          id: data["_id"],
+          username: data["username"],
+          email: data["email"],
+          avatar: data["avatar"],
+          status: data["status"],
+          channels: data["channels"],
+          dm_channels: data["dm_channels"],
+          friendsList: data["friendsList"]
+        };
       console.log("User has been updated",this.user);
     })
   }
