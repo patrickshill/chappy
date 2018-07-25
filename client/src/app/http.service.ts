@@ -105,6 +105,8 @@ export class HttpService {
   // Update current state of user
   showSub(id){
     this.channel_id = id;
+
+    console.log(this.channel_id);
   };
 
 }

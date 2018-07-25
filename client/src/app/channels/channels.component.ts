@@ -48,7 +48,6 @@ export class ChannelsComponent implements OnInit {
           dm_channels: data["dm_channels"],
           friendsList: data["friendsList"]
         };
-        console.log("borked here!")
         this.AbbreviateChannels();
     })
   }
@@ -56,22 +55,15 @@ export class ChannelsComponent implements OnInit {
   // Make a list of abbreviated channel names for display
   AbbreviateChannels(){
     this.abb_channel = [];
-    for (var x of this._httpService.user.channels){
-      let channel = this._httpService.getOneChannel(x);
-      channel.subscribe(data => {
-        data["channelName"] = data["channelName"].match(/\b\w/g).join('');
-        this.abb_channel.push(data);
-      });
+    if (this._httpService.user.channels.length > 0){
+      for (var x of this._httpService.user.channels){
+        let channel = this._httpService.getOneChannel(x);
+        channel.subscribe(data => {
+          data["channelName"] = data["channelName"].match(/\b\w/g).join('');
+          this.abb_channel.push(data);
+        });
+      }
     }
-    console.log(this.abb_channel);
-    // for (var x of this._httpService.user.channels){
-    //   this.abb_channel.push(
-    //     {
-    //       name: x["channelName"].match(/\b\w/g).join(''),
-    //       id: x._id
-    //     }
-    //   );
-    // }
     return this.abb_channel;
   }
 
