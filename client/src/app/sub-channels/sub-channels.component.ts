@@ -8,9 +8,13 @@ import { HttpService } from '../http.service';
 })
 export class SubChannelsComponent implements OnInit {
 
-  constructor(private _httpService: HttpService) {}
+  constructor(private _httpService: HttpService) {
+    this._httpService.subComponent = this;
+  }
 
   subchannels: Object[];
+  textchannels: Object[];
+  voicechannels: Object[];
 
   ngOnInit() {
     this.getSubChannels();
@@ -18,28 +22,41 @@ export class SubChannelsComponent implements OnInit {
 
   getSubChannels(){
     this.subchannels = [];
-
+    this.textchannels = [];
+    this.voicechannels = [];
     let channel = this._httpService.getOneChannel(this._httpService.channel_id);
     channel.subscribe(data => {
       if("errors" in data){
         console.log("errors");
       }
       else {
+        // console.log(data);
         for (var x of data["textChannels"]){
-          this.subchannels.push(x);
+          this.textchannels.push(x);
         }
         for (var i of data["voiceChannels"]){
-          this.subchannels.push(i);
+          this.voicechannels.push(i);
         }
       }
-      // console.log(this.subchannels);
+      for (let j of this.textchannels){
+        let sub = this._httpService.getOneText(j);
+        sub.subscribe(data => {
+          this.subchannels.push(data);
+        })
+      }
+      // for (let j of this.textchannels){
+      //   let sub = this._httpService.getOneVoice(j);
+      //   sub.subscribe(data => {
+      //     this.subchannels.push(data);
+      //   })
+      // }
+      console.log(this.subchannels);
     });
   };
 
   // Pass Sub ID to Service for biz
   passSub(id){
-    this._httpService.sub_id = id;
-    // console.log(this._httpService.sub_id);
+    this._httpService.subChat(id);
   }
 
 }

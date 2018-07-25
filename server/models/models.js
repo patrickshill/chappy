@@ -79,14 +79,14 @@ const VoiceChannelSchema = new mongoose.Schema({
         type: Number,
         required: [false, "Voice channel requires a port"]
     },
-    connectedUsers: [UserSchema]
+    connectedUsers: []
 },{timestamps:true});
 
 const ChannelSchema = new mongoose.Schema({
     channelName: String,
-    users: [UserSchema],
-    textChannels: [TextChannelSchema],
-    voiceChannels: [VoiceChannelSchema]
+    users: [],
+    textChannels: [],
+    voiceChannels: []
 },{timestamps:true});
 
 const Users         = mongoose.model("user",UserSchema);

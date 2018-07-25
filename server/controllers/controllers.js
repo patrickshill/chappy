@@ -69,12 +69,6 @@ function addAnything(req,res){
             .then(data=>res.json(data))
             .catch(errs=>res.json(errs))
     }
-    // if ('C_id' in req.body){
-    //     console.log(req.body);
-    //     models.Users.findByIdAndUpdate(req.body.id, {$push: {channels: req.body.C_id}})
-    //         .then(data=>res.json(data))
-    //         .catch(errs=>res.json(errs))
-    // }
 }
 
 // Remove friend/dm_channel/channel to User
@@ -105,7 +99,6 @@ function removeUser(req,res) {
 
 // Create Channel with default user and general chat names.
 function createChannel(req,res) {
-
     models.Users.findById(req.body.U_id)
     .then(data => {
         return data;
@@ -118,17 +111,16 @@ function createChannel(req,res) {
         var voice_default = new models.VoiceChannels();
             voice_default.channelName = 'General Voice Chat';
             voice_default.save();
-
         var new_channel = new models.Channels();
         new_channel.channelName = req.body.channelName;
-        new_channel.users.push(data);
-        new_channel.textChannels.push(text_default);
-        new_channel.voiceChannels.push(voice_default);
+        new_channel.users.push(data["_id"]);
+        new_channel.textChannels.push(text_default._id);
+        new_channel.voiceChannels.push(voice_default._id);
         new_channel.save();
         return new_channel;
     })
     .then(data => {
-        models.Users.findByIdAndUpdate(req.body.U_id, {$push: {channels: data}})
+        models.Users.findByIdAndUpdate(req.body.U_id, {$push: {channels: data["_id"]}})
         .then(data=>res.json(data))
         .catch(errs=>res.json(errs))
     })
@@ -152,17 +144,17 @@ function getOneChannel(req,res) {
 // Update Channel Group (add users/subchannels)
 function updateChannel(req,res) {
     if ('user' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$push: {users: req.body }})
+        models.Channels.findByIdAndUpdate(req.params.id, {$push: {users: req.body._id }})
         .then(data => res.json(data))
         .catch(errs => res.json(errs));
     }
     if ('textChannel' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$push: {textChannels: req.body }})
+        models.Channels.findByIdAndUpdate(req.params.id, {$push: {textChannels: req.body._id }})
         .then(data => res.json(data))
         .catch(errs => res.json(errs));
     }
     if ('voiceChannel' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$push: {voiceChannels: req.body }})
+        models.Channels.findByIdAndUpdate(req.params.id, {$push: {voiceChannels: req.body._id }})
         .then(data => res.json(data))
         .catch(errs => res.json(errs));
     }
@@ -243,7 +235,7 @@ function updateTextChannel(req,res) {
                 return data;
             })
             .then(message => {
-                models.TextChannels.findByIdAndUpdate({_id: req.params.id})
+                models.TextChannels.findByIdAndUpdate({_id: req.body.T_id})
                 .then(data => {
                     data.messages.push(message);
                     data.save();

@@ -34,6 +34,7 @@ export class ChannelsComponent implements OnInit {
     }
     let new_channel = this._httpService.createChannel(genericData);
     new_channel.subscribe(data => {
+      console.log(data);
       this.ngOnInit();
     });
     
@@ -59,21 +60,21 @@ export class ChannelsComponent implements OnInit {
   // Make a list of abbreviated channel names for display
   AbbreviateChannels(){
     this.abb_channel = [];
-    for (var x of this._httpService.user.channels){
-      this.abb_channel.push(
-        {
-          name: x["channelName"].match(/\b\w/g).join(''),
-          id: x._id
-        }
-      );
+    if (this._httpService.user.channels.length > 0){
+      for (var x of this._httpService.user.channels){
+        let channel = this._httpService.getOneChannel(x);
+        channel.subscribe(data => {
+          data["channelName"] = data["channelName"].match(/\b\w/g).join('');
+          this.abb_channel.push(data);
+        });
+      }
     }
     return this.abb_channel;
   }
 
   // Set id in sub channel component
   getChannelId(id){
-    this._httpService.channel_id = id;
-    console.log(id);
+    this._httpService.showSub(id);
   }
 
 

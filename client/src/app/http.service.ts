@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SubChannelsComponent } from './sub-channels/sub-channels.component';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,9 @@ export class HttpService {
 
   channel_id: any;
   sub_id: any;
+
+  subComponent: any;
+  bizComponent: any;
 
   constructor(private _http: HttpClient) {}
 
@@ -97,26 +101,19 @@ export class HttpService {
   
   // User login
   userLogin(loginForm) {
-    console.log(loginForm);
     return this._http.post("/api/users/login", loginForm);
   }
 
   // Update current state of user
-  currentUserUpdate(){
-    let user = this.getOneUser(this.user['id']);
-    user.subscribe(data => {
-      this.user = {
-        id: data["_id"],
-        username: data["username"],
-        email: data["email"],
-        avatar: data["avatar"],
-        status: data["status"],
-        channels: data["channels"],
-        dm_channels: data["dm_channels"],
-        friendsList: data["friendsList"]
-      };
-    });
+  showSub(id){
+    this.channel_id = id;
+    this.subComponent.ngOnInit();
+  };
 
+  subChat(id){
+    this.sub_id = id;
+    this.bizComponent.ngOnInit();
+    console.log(this.sub_id);
   };
 
 }
