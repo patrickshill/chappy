@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SubChannelsComponent } from './sub-channels/sub-channels.component';
 
 @Injectable({
   providedIn: 'root'
@@ -102,21 +103,8 @@ export class HttpService {
   }
 
   // Update current state of user
-  currentUserUpdate(){
-    let user = this.getOneUser(this.user['id']);
-    user.subscribe(data => {
-      this.user = {
-        id: data["_id"],
-        username: data["username"],
-        email: data["email"],
-        avatar: data["avatar"],
-        status: data["status"],
-        channels: data["channels"],
-        dm_channels: data["dm_channels"],
-        friendsList: data["friendsList"]
-      };
-    });
-
+  showSub(id){
+    this.channel_id = id;
   };
 
 }
