@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { SubChannelsComponent } from '../sub-channels/sub-channels.component';
-import { Router, ActivatedRoute } from '../../../node_modules/@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-channels',
@@ -14,7 +15,11 @@ export class ChannelsComponent implements OnInit {
   channel: any;
   abb_channel: Object[];
 
-  constructor(private _httpService: HttpService, private _route: Router, private _router: ActivatedRoute) {}
+  constructor(
+    private _httpService: HttpService,
+    private _route: ActivatedRoute,
+    private _router: Router
+  ) {}
 
   ngOnInit() {
     // this._httpService.currentUserUpdate();
@@ -32,6 +37,7 @@ export class ChannelsComponent implements OnInit {
     let new_channel = this._httpService.createChannel(genericData);
     new_channel.subscribe(data => {
       console.log("New channel is",data)
+      // this.ngOnInit();
       this.ngOnInit();
     });
     // this.ngOnInit();
@@ -51,6 +57,7 @@ export class ChannelsComponent implements OnInit {
           dm_channels: data["dm_channels"],
           friendsList: data["friendsList"]
         };
+        this.AbbreviateChannels();
       console.log("User has been updated",this.user);
     })
   }

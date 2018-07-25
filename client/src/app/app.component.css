@@ -245,15 +245,17 @@
 .channel-button {
     display: block;
     border-radius: 50%;
-    height: 9vh;
-    width: 80%;
-    background-color: grey;
+    /* height: 9vh;
+    width: 80%; */
+    width: 60px;
+    height: 60px;
+    background-color: rgb(84, 82, 87);
     color: white;
     margin: auto;
 }
 .horizontal-plus {
     position: relative;
-    background-color: #FFFFFF;
+    background-color: rgb(36, 35, 37);
     width: 50%;
     height: 12.5%;
     left: 25%;
@@ -261,7 +263,7 @@
 }
 .vertical-plus {
     position: absolute;
-    background-color: #FFFFFF;
+    background-color: rgb(36, 35, 37);
     width: 12.5%;
     height: 50%;
     left: 43.75%;
