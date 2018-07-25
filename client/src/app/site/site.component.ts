@@ -69,9 +69,18 @@ export class SiteComponent implements OnInit {
         console.log("Errors in site.component.ts", data);
       } else {
         console.log("loggin in yo");
-        this._httpService.user_id = data["_id"];
+        this._httpService.user = {
+          id: data["_id"],
+          username: data["username"],
+          email: data["email"],
+          avatar: data["avatar"],
+          status: data["status"],
+          channels: data["channels"],
+          dm_channels: data["dm_channels"],
+          friendsList: data["friendsList"]
+        }
         this._httpService.logged = true;
-
+        console.log(this._httpService.user, this._httpService.logged)
         this.hideLoginModal();
         this.loginForm = {
           email: "",

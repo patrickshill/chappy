@@ -58,37 +58,39 @@ function loginUser(req,res) {
 
 // Add friend/dm_channel/channel to User
 function addAnything(req,res){
-    if ('friend' in req.body){
-        models.Users.findByIdAndUpdate({_id: req.params.id}, {$push: {friendsList: req.params.Fid}})
+    console.log(req.body)
+    if ('F_id' in req.body){
+        models.Users.findByIdAndUpdate(req.body.id, {$push: {friendsList: req.body.F_id}})
             .then(data=>res.json(data))
             .catch(errs=>res.json(errs))
     }
-    if ('dm_channel' in req.body){
-        models.Users.findByIdAndUpdate({_id: req.params.id}, {$push: {dm_channels: req.params.Fid}})
+    if ('M_id' in req.body){
+        models.Users.findByIdAndUpdate(req.body.id, {$push: {dm_channels: req.body.M_id}})
             .then(data=>res.json(data))
             .catch(errs=>res.json(errs))
     }
-    if ('channel' in req.body){
-        models.Users.findByIdAndUpdate({_id: req.params.id}, {$push: {channels: req.params.Fid}})
-            .then(data=>res.json(data))
-            .catch(errs=>res.json(errs))
-    }
+    // if ('C_id' in req.body){
+    //     console.log(req.body);
+    //     models.Users.findByIdAndUpdate(req.body.id, {$push: {channels: req.body.C_id}})
+    //         .then(data=>res.json(data))
+    //         .catch(errs=>res.json(errs))
+    // }
 }
 
 // Remove friend/dm_channel/channel to User
 function removeAnything(req,res){
     if ('F_id' in req.body){
-        models.Users.findByIdAndUpdate({_id: req.params.id}, {$pull: {friendsList: {_id: req.params.F_id}}})
+        models.Users.findByIdAndUpdate({_id: req.body.id}, {$pull: {friendsList: {_id: req.body.F_id}}})
             .then(data=>res.json(data))
             .catch(errs=>res.json(errs))
     }
     if ('DM_id' in req.body){
-        models.Users.findByIdAndUpdate({_id: req.params.id}, {$pull: {dm_channels: {_id: req.params.DM_id}}})
+        models.Users.findByIdAndUpdate({_id: req.body.id}, {$pull: {dm_channels: {_id: req.body.DM_id}}})
             .then(data=>res.json(data))
             .catch(errs=>res.json(errs))
     }
     if ('C_id' in req.body){
-        models.Users.findByIdAndUpdate({_id: req.params.id}, {$pull: {channels: {_id: req.params.C_id}}})
+        models.Users.findByIdAndUpdate({_id: req.body.id}, {$pull: {channels: {_id: req.body.C_id}}})
             .then(data=>res.json(data))
             .catch(errs=>res.json(errs))
     }
@@ -96,7 +98,7 @@ function removeAnything(req,res){
 
 // Delete document
 function removeUser(req,res) {
-    models.Users.findByIdAndRemove({_id:req.params.id})
+    models.Users.findByIdAndRemove({_id: req.params.id})
     .then(data=>res.json(data))
     .catch(errs=>res.json(errs));
 }
@@ -104,7 +106,7 @@ function removeUser(req,res) {
 // Create Channel with default user and general chat names.
 function createChannel(req,res) {
 
-    models.Users.findById(req.params.id)
+    models.Users.findById(req.body.U_id)
     .then(data => {
         return data;
     })
@@ -123,7 +125,12 @@ function createChannel(req,res) {
         new_channel.textChannels.push(text_default);
         new_channel.voiceChannels.push(voice_default);
         new_channel.save();
-        res.json(new_channel);
+        return new_channel;
+    })
+    .then(data => {
+        models.Users.findByIdAndUpdate(req.body.U_id, {$push: {channels: data}})
+        .then(data=>res.json(data))
+        .catch(errs=>res.json(errs))
     })
     .catch(errs => res.json(errs));
 }

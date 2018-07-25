@@ -1,15 +1,3 @@
-<div class="channel-link">
-  <p>#Channel One</p>
-</div>
-<div class="channel-link">
-    <p>#Channel Two</p>
-</div>
-<div class="channel-link">
-    <p>#Channel Three</p>
-</div>
-<div class="channel-link">
-    <p>#Channel Four</p>
-</div>
-<div class="channel-link">
-    <p>#Channel Five</p>
+<div class="channel-link" *ngFor="let channel of subchannels">
+  <a (click)="passSub(channel._id)">{{ channel.channelName }}</a>
 </div>
