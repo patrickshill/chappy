@@ -89,7 +89,7 @@
     padding: 20px;
     position: fixed;
     z-index: 20;
-    top: 20vh;
+    top: 5vh;
     left: calc(50vw - 240px);
     width: 480px;
     text-align: center;
@@ -123,7 +123,7 @@
     padding: 20px;
     position: fixed;
     z-index: 20;
-    top: 20vh;
+    top: 5vh;
     left: calc(50vw - 240px);
     width: 480px;
     text-align: center;
@@ -228,7 +228,7 @@
 }
 .message-input {
     margin-top: 10px;
-    padding: 20px;
+    padding: 20px 80px 20px 20px;
     width: 100%;
     height: 60px;
     text-align: left;
@@ -242,8 +242,19 @@
     outline: none;
 }
 .message-submit {
-    display: none;
-    position: absolute;
+    position: relative;
+    margin-top: 10px;
+    left: -60px;
+    width: 60px;
+    height: 60px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: none;
+    background-color: rgb(89, 81, 90);
+    color: rgb(177, 177, 177);
+}
+.message-submit:hover {
+    cursor: pointer;
 }
 .channel-users {
     display: inline-block;
@@ -255,11 +266,11 @@
 
 .channel-button {
     display: block;
+    margin: 10px auto;
     border-radius: 50%;
     /* height: 9vh;
     width: 80%; */
     line-height: 60px;
-    margin: 10px auto;
     text-align: center;
     width: 60px;
     height: 60px;
