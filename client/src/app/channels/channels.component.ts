@@ -79,7 +79,7 @@ export class ChannelsComponent implements OnInit {
   }
 
   getMain(){
-    this._httpService.showSub("5b5a0d8640d18c8238ec5edb");
+    this._httpService.showSub("5b5a13f1da275949507f8596");
   }
 
 
