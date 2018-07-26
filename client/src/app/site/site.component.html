@@ -11,15 +11,16 @@
 
       <!-- LINKS -->
       <div class="nav-links">
-        <a [routerLink]="['/chapp']">
+        <a *ngIf="_httpService.logged" [routerLink]="['/chapp']">
           <button class="btn-nav btn-app">Open</button>
         </a>
         <!-- <a [routerLink]="['login']"> -->
-          <button (click)="showLoginModal()" class="btn-nav btn-primary">Login</button>
+          <button *ngIf="!_httpService.logged" (click)="showLoginModal()" class="btn-nav btn-primary">Login</button>
         <!-- </a> -->
         <!-- <a [routerLink]="['registration']"> -->
-          <button (click)="showRegistrationModal()" class="btn-nav btn-secondary">Registration</button>
+          <button *ngIf="!_httpService.logged" (click)="showRegistrationModal()" class="btn-nav btn-secondary">Register</button>
         <!-- </a> -->
+        <button *ngIf="_httpService.logged" (click)="logoutUser()" class="btn-nav">Logout</button>
       </div>
       
       

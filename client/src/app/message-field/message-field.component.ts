@@ -46,6 +46,14 @@ export class MessageFieldComponent implements OnInit {
       }
       else {
         this._httpService.getMessages();
+        
+        this.message = this.fb.group({
+          U_id: this.id,
+          content: '',
+          T_id: this._httpService.sub_id,
+          userName: this.userName,
+          userAvatar: this.userAvatar
+        });
       }
     })
   }
