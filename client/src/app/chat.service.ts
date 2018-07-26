@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { WebsocketService } from './websocket.service';
 import { Observable, Subject } from 'rxjs';
 import { map } from "rxjs/operators";
-import { URL } from 'url';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class ChatService {
   constructor(private wsService: WebsocketService) {
 
     this.messages = <Subject<any>>wsService
-      .connect(URL)
+      .connect()
       .pipe(map((response: any): any => {
         return response;
       })
