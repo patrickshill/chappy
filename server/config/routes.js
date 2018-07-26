@@ -68,7 +68,7 @@ function router(app) {
     app.get("/api/textchannels/:id", api.getOneText);
 
     // Update Text Channel (add or delete message, or update name or port)
-    app.post("/api/textchannels/update/:id", api.updateTextChannel);
+    app.post("/api/textchannels/update", api.updateTextChannel);
 
 
     //###### Voice Sub Channel Routes ######

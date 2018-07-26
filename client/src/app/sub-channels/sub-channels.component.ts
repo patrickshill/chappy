@@ -30,21 +30,16 @@ export class SubChannelsComponent implements OnInit {
         console.log("errors");
       }
       else {
-        // console.log(data);
-        for (var x of data["textChannels"]){
-          this.textchannels.push(x);
-        }
-        for (var i of data["voiceChannels"]){
-          this.voicechannels.push(i);
+        this.textchannels = data["textChannels"];
+        this.voicechannels = data["voiceChannels"];
+        for (let j in this.textchannels){
+          let sub = this._httpService.getOneText(this.textchannels[j]);
+          sub.subscribe(data => {
+            this.subchannels.push(data);
+          })
         }
       }
-      for (let j of this.textchannels){
-        let sub = this._httpService.getOneText(j);
-        sub.subscribe(data => {
-          this.subchannels.push(data);
-        })
-      }
-      // for (let j of this.textchannels){
+        // for (let j of this.textchannels){
       //   let sub = this._httpService.getOneVoice(j);
       //   sub.subscribe(data => {
       //     this.subchannels.push(data);

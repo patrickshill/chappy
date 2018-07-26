@@ -23,6 +23,7 @@ export class HttpService {
 
   subComponent: any;
   bizComponent: any;
+  msgField: any;
 
   constructor(private _http: HttpClient) {}
 
@@ -90,8 +91,8 @@ export class HttpService {
     return this._http.get("/api/textchannels/"+id);
   }
 
-  updateTextChannel(id, data){
-    return this._http.post("/api/textchannels/update/"+id, data);
+  updateTextChannel(data){
+    return this._http.post("/api/textchannels/update", data);
   }
 
   // User registration
@@ -104,16 +105,21 @@ export class HttpService {
     return this._http.post("/api/users/login", loginForm);
   }
 
-  // Update current state of user
+
   showSub(id){
     this.channel_id = id;
     this.subComponent.ngOnInit();
   };
 
+
   subChat(id){
     this.sub_id = id;
     this.bizComponent.ngOnInit();
-    console.log(this.sub_id);
+    this.msgField.ngOnInit();
   };
+
+  getMessages(){
+    this.bizComponent.ngOnInit();
+  }
 
 }

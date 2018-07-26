@@ -12,32 +12,49 @@ export class MessageFieldComponent implements OnInit {
 
   message: FormGroup;
   id = this._httpService.user.id;
-  channel_id: any;
   errors: any;
-
+  message_list: any;
+  userName = this._httpService.user.username;
+  userAvatar = this._httpService.user.avatar;
 
   constructor(private _httpService: HttpService,
     private fb: FormBuilder, 
     private _route: ActivatedRoute, 
     private _router: Router)
     {
-      this._route.paramMap.subscribe(data => {
-        this.channel_id = data.get('id');
-      });
-
-      this.message = fb.group({
-        U_id: this.id,
-        content: ''
-      });
-
+      this._httpService.msgField = this;
     }
 
   ngOnInit() {
+    console.log("please help me");
+    this.message = this.fb.group({
+      U_id: this.id,
+      content: '',
+      T_id: this._httpService.sub_id,
+      userName: this.userName,
+      userAvatar: this.userAvatar
+    });
+    // this.getMessages();
   }
 
   sendMessage(post){
-    console.log(post);
-    
+    let messages = this._httpService.updateTextChannel(post);
+    messages.subscribe(data => {
+      if('errors' in data){
+        console.log(data);
+        this.errors = data;
+      }
+      else {
+        this._httpService.getMessages();
+      }
+    })
   }
+
+  // getMessages(){
+  //   let messages = this._httpService.getOneText(this.channel_id);
+  //   messages.subscribe(data => {
+  //     this.message_list = data["messages"];
+  //   });
+  // }
 
 }

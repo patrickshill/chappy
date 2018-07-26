@@ -221,39 +221,21 @@ function getOneText(req,res) {
 // Update Text Channel (add or delete message, or update name or port)
 function updateTextChannel(req,res) {
     if ('content' in req.body){
-
-        models.Users.findById(req.body.U_id)
-        .then(user => {
-            models.Messages.create(req.body)
-            .then(data => {
-                data.userName = user.username;
-                data.userAvater = user.avatar;
-                if (req.body.attachments.length > 1){
-                    data.attachments.push(req.body.attachments)
-                }
-                data.save();
-                return data;
-            })
-            .then(message => {
-                models.TextChannels.findByIdAndUpdate({_id: req.body.T_id})
-                .then(data => {
-                    data.messages.push(message);
-                    data.save();
-                    res.json(data);
-                })
-                .catch(errs => res.json(errs));
-            })
+        models.TextChannels.findById(req.body.T_id)
+        .then(data=>{
+            data.messages.push(req.body);
+            return data.save();
         })
-        .catch(errs=>res.json(errs))
-        
+        .then(data=>res.json(data))
+        .catch(errs=>res.json(errs));
     }
     if ('M_id' in req.body){
-        models.TextChannels.findByIdAndUpdate({_id: req.params.id}, {$pull: {messages: {_id: req.body.M_id}}})
+        models.TextChannels.findByIdAndUpdate({_id: req.body.T_id}, {$pull: {messages: {_id: req.body.M_id}}})
         .then(data => res.json(data))
         .catch(errs => res.json(errs));
     }
     else{
-        models.TextChannels.findById({_id: req.params.id})
+        models.TextChannels.findById({_id: req.body.T_id})
         .then(data => {
             data.channelName = req.body.channelName;
             data.save();

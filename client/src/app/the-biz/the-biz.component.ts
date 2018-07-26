@@ -8,27 +8,22 @@ import { HttpService } from '../http.service';
 })
 export class TheBizComponent implements OnInit {
 
-  messages: Object[];
+  messages: any;
 
   constructor(private _httpService: HttpService) {
     this._httpService.bizComponent = this;
   }
 
   ngOnInit() {
+    this.messages = [];
     this.getMessages();
   }
 
   getMessages(){
     let sub = this._httpService.getOneText(this._httpService.sub_id);
     sub.subscribe(data => {
-      if (data["messages"].length >= 1){
-        for(let messages of data["messages"]){
-          messages.push(messages);
-        }
-      }
-      else {
-        console.log(data, "im the biz!")
-      }
+        this.messages = data["messages"];
+        console.log(this.messages, "im the real biz");
     })
   }
 
