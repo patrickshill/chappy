@@ -1,3 +1,4 @@
-<div class="channel-link" *ngFor="let channel of subchannels">
-  <a (click)="passSub(channel._id)">{{ channel.channelName }}</a>
+<div class="server-name">Server Name</div>
+<div (click)="passSub(channel._id)" class="channel-link" *ngFor="let channel of subchannels">
+  <a >#{{ channel.channelName }}</a>
 </div>

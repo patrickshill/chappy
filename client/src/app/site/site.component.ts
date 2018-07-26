@@ -89,6 +89,10 @@ export class SiteComponent implements OnInit {
       }
     })
   }
+
+  logoutUser(){
+    this._httpService.logged = false;
+  }
   
   // Show/hide registration modal
   showRegistrationModal() {
