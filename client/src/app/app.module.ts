@@ -17,6 +17,8 @@ import { TheBizComponent } from './the-biz/the-biz.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChannelUsersComponent } from './channel-users/channel-users.component';
 import { MessageFieldComponent } from './message-field/message-field.component';
+import { WebsocketService } from './websocket.service';
+import { ChatService } from './chat.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,7 @@ import { MessageFieldComponent } from './message-field/message-field.component';
     ReactiveFormsModule
 
   ],
-  providers: [HttpService],
+  providers: [HttpService, WebsocketService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -14,7 +14,7 @@ export class ChannelsComponent implements OnInit {
   user = this._httpService.user;
   channel: any;
   abb_channel: Object[];
-
+  new_id: any;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -35,6 +35,7 @@ export class ChannelsComponent implements OnInit {
     let new_channel = this._httpService.createChannel(genericData);
     new_channel.subscribe(data => {
       console.log(data);
+      this.new_id = data["_id"];
       this.ngOnInit();
     });
     
@@ -54,7 +55,7 @@ export class ChannelsComponent implements OnInit {
           friendsList: data["friendsList"]
         };
         this.AbbreviateChannels();
-    })
+      })
   }
 
   // Make a list of abbreviated channel names for display
@@ -75,6 +76,10 @@ export class ChannelsComponent implements OnInit {
   // Set id in sub channel component
   getChannelId(id){
     this._httpService.showSub(id);
+  }
+
+  getMain(){
+    this._httpService.showSub("5b5a0d8640d18c8238ec5edb");
   }
 
 

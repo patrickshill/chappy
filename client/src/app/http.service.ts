@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SubChannelsComponent } from './sub-channels/sub-channels.component';
 
 @Injectable({
   providedIn: 'root'

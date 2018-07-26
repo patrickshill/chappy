@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { FormBuilder, FormGroup, Validators } from '../../../node_modules/@angular/forms';
-import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
+import { ChatService } from '../chat.service';
 
 @Component({
   selector: 'app-message-field',
@@ -17,13 +17,22 @@ export class MessageFieldComponent implements OnInit {
   userName = this._httpService.user.username;
   userAvatar = this._httpService.user.avatar;
 
-  constructor(private _httpService: HttpService,
-    private fb: FormBuilder, 
-    private _route: ActivatedRoute, 
-    private _router: Router)
-    {
-      this._httpService.msgField = this;
-    }
+  constructor(private _httpService: HttpService, private fb: FormBuilder, private chatService: ChatService)
+  {
+    this._httpService.msgField = this;
+    chatService.messages.subscribe(msg => {
+      console.log('response from websocket server')
+    })
+  }
+
+  private random_message = {
+    author: 'elliot',
+    message: 'howdy howdy howdy'
+  }
+  sendMsg(){
+    console.log('msg from client');
+    this.chatService.messages.next(this.random_message);
+  }
 
   ngOnInit() {
     console.log("please help me");
@@ -34,7 +43,6 @@ export class MessageFieldComponent implements OnInit {
       userName: this.userName,
       userAvatar: this.userAvatar
     });
-    // this.getMessages();
   }
 
   sendMessage(post){
@@ -49,12 +57,5 @@ export class MessageFieldComponent implements OnInit {
       }
     })
   }
-
-  // getMessages(){
-  //   let messages = this._httpService.getOneText(this.channel_id);
-  //   messages.subscribe(data => {
-  //     this.message_list = data["messages"];
-  //   });
-  // }
 
 }

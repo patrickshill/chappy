@@ -12,10 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "budo": "^11.3.2",
     "express": "^4.16.3",
+    "http": "0.0.0",
     "mongoose": "^5.2.5",
     "mongoose-unique-validator": "^2.0.1",
     "path": "^0.12.7",
-    "socket.io": "^2.1.1"
+    "simple-peer": "^9.1.2",
+    "socket.io": "^2.1.1",
+    "watchify": "^3.11.0"
   }
 }
