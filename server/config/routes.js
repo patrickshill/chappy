@@ -20,11 +20,13 @@ function router(app) {
     // Get user by id
     app.get("/api/users/:id",api.getUser);
 
+    app.post("/api/users/name",api.getUserByName);
+
     // Update user
     app.post("/api/users/:id",api.updateUser);
 
     // Add friend/dm_channel/channel group
-    app.post("/api/users/addTo", api.addAnything)
+    app.patch("/api/users/addTo", api.addAnything)
 
     // Remove friend/dm_channel/channel group
     app.post("/api/users/removeFrom", api.removeAnything)

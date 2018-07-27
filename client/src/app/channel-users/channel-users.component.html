@@ -3,22 +3,24 @@
 <div *ngIf="show" class="login-modal-fade">
     <div class="login-modal-form">
         <span (click)="hideModal()" class="close-modal">X</span>
-        <form (submit)="addSubChannel()">
+        <form (submit)="findUsers()">
             <p>Find Friends:</p>
-            <p><input type="text" ></p>
+            <p><input type="text" name="user.name" [(ngModel)]="user.name"></p>
+            <p *ngIf="errors != null">{{errors}}</p>
             <p><input class="btn btn-primary" type="submit" value="Add"></p>
         </form>
     </div>
 </div>
 
 <h4>Online</h4> 
-<div class="channel-user-container">
-  <div class="channel-user-avatar">
-    <div class="channel-user-status online"></div>
+<div class="wrapper" *ngIf="allFriends">
+  <div class="channel-user-container" *ngFor="let friend of allFriends">
+    <div class="channel-user-avatar">
+      <div class="channel-user-status online"></div>
+    </div>
+    <div class="channel-user-username">{{friend.username}}</div>
   </div>
-  <div class="channel-user-username">Example user1</div>
 </div>
-
 <div class="channel-user-container">
   <div class="channel-user-avatar">
     <div class="channel-user-status away"></div>

@@ -28,8 +28,12 @@ export class HttpService {
     return this._http.get("/api/users/"+id);
   }
 
+  getUserByName(data){
+    return this._http.post("/api/users/name", data);
+  }
+
   updateUser(data){
-    return this._http.post("/api/users/addTo", data);
+    return this._http.patch("/api/users/addTo", data);
   }
 
   removeFromUser(data){

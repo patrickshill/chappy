@@ -21,6 +21,12 @@ function getUser(req,res) {
         .catch(errs=>res.json(errs));
 }
 
+function getUserByName(req,res) {
+    models.Users.findOne({username: req.body.name})
+        .then(data=>res.json(data))
+        .catch(errs=>res.json(errs));
+}
+
 // Update document
 function updateUser(req,res) {
     models.Users.findOneAndUpdate({_id:req.params.id},req.body, {runValidators:true, context: 'query'})
@@ -58,10 +64,11 @@ function loginUser(req,res) {
 
 // Add friend/dm_channel/channel to User
 function addAnything(req,res){
-    console.log(req.body)
     if ('F_id' in req.body){
         models.Users.findByIdAndUpdate(req.body.id, {$push: {friendsList: req.body.F_id}})
-            .then(data=>res.json(data))
+            .then(data=>{
+                console.log(data);
+                res.json(data)})
             .catch(errs=>res.json(errs))
     }
     if ('M_id' in req.body){
@@ -330,6 +337,7 @@ module.exports = {
     addAnything: addAnything,
     removeAnything: removeAnything,
     removeUser: removeUser,
+    getUserByName: getUserByName,
 
     createChannel: createChannel,
     getChannelGroups: getChannelGroups,
