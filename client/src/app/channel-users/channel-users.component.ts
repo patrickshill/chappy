@@ -45,7 +45,7 @@ export class ChannelUsersComponent implements OnInit {
     });
 
     this.updateCurrentUser();
-    this.getFriends();
+    // this.getFriends();
     this.chatFriend = {
       id: '',
       username: '',
@@ -70,7 +70,7 @@ export class ChannelUsersComponent implements OnInit {
         if(this.currentUser.friendsList.length > 1){
           for (let x of this.currentUser.friendsList){
             if (data['_id'] == x){
-              this.errors = 'You the same friend twice!'
+              this.errors = 'You added the same friend twice!'
               console.log(this.errors);
               return this.errors;
             }
@@ -108,6 +108,8 @@ export class ChannelUsersComponent implements OnInit {
         dm_channels: data["dm_channels"],
         friendsList: data["friendsList"]
       };
+      console.log(data);
+      this.getFriends();
     });
   }
 
@@ -186,8 +188,7 @@ export class ChannelUsersComponent implements OnInit {
       actualChat.subscribe(textChat => {
         this.messages = textChat["messages"];
         this.privateChat = textChat["_id"];
-        this.form_message.T_id = textChat["_id"];
-        console.log(this.privateChat, 'I GOT IT')
+        this.form_message['T_id'] = textChat["_id"];
       });
     })
   }
