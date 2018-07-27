@@ -28,14 +28,21 @@
 </div>
 
 <div *ngIf="chatShow" class="login-modal-fade">
-    <div class="login-modal-form">
+    <div class="dm-modal">
         <span (click)="hideChat()" class="close-modal">X</span>
         <form [formGroup]="form_message" (ngSubmit)="sendPvtMsg(form_message.value)" >
-          <p>{{currentUser.username}} & {{chatFriend.username}}</p><br>
-          <p *ngFor="let message of messages">{{message.username}}</p>
-          <p *ngFor="let message of messages">{{message.content}}</p>
-          <p><input type="text" formControlName="content"></p>
-          <p><input class="btn btn-primary" type="submit" value="Send"></p>
+            <p>{{currentUser.username}} & {{chatFriend.username}}</p><br>
+            <div class="dm-messages">
+                <div *ngFor="let message of messages" class="dm-message">
+                    <p class="dm-username">{{message.userName}}:</p>
+                    <p class="dm-content">{{message.content}}</p>
+                </div>
+            </div>
+          <p>
+              <input type="text" formControlName="content" autocomplete="off">
+              <input class="btn btn-primary" type="submit" value="Send">
+            </p>
+          
         </form>
     </div>
 </div>
