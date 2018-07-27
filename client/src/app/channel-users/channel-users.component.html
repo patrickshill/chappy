@@ -1,4 +1,5 @@
-<a (click)="showModal()">Add New Friends</a>
+<a (click)="showModal()"><i class="fas fa-user-plus fa-2x" aria-hidden="true"></i></a>
+<a (click)="showDMs()"><i class="fas fa-envelope fa-2x"></i></a>
 
 <div *ngIf="show" class="login-modal-fade">
     <div class="login-modal-form">
@@ -12,14 +13,41 @@
     </div>
 </div>
 
+<div *ngIf="DMshow" class="login-modal-fade">
+    <div class="login-modal-form">
+        <span (click)="hideDMs()" class="close-modal">X</span>
+        <form (submit)="findUsers()">
+              <ul>
+                <li><p>generic content</p></li>
+                <li><p>please werk</p></li>
+                <p><input type="text" name="user.name" [(ngModel)]="user.name"></p>
+                <p><input class="btn btn-primary" type="submit" value="Add"></p>
+              </ul>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="chatShow" class="login-modal-fade">
+    <div class="login-modal-form">
+        <span (click)="hideChat()" class="close-modal">X</span>
+        <form [formGroup]="form_message" (ngSubmit)="sendPvtMsg(form_message.value)" >
+          <p>{{currentUser.username}} & {{chatFriend.username}}</p><br>
+          <p *ngFor="let message of messages">{{message.username}}</p>
+          <p *ngFor="let message of messages">{{message.content}}</p>
+          <p><input type="text" formControlName="content"></p>
+          <p><input class="btn btn-primary" type="submit" value="Send"></p>
+        </form>
+    </div>
+</div>
+
 <h4>Online</h4> 
 
-  <div class="channel-user-container" *ngFor="let friend of allFriends">
-    <div class="channel-user-avatar">
-      <div class="channel-user-status online"></div>
-    </div>
-    <div class="channel-user-username">{{friend.username}}</div>
+<div class="channel-user-container" *ngFor="let friend of allFriends">
+  <div (click)="showChat(friend.id)" class="channel-user-avatar">
+    <div class="channel-user-status online"></div>
   </div>
+  <div class="channel-user-username">{{friend.username}}</div>
+</div>
 
 <div class="channel-user-container">
   <div class="channel-user-avatar">
