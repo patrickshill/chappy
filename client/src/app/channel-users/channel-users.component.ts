@@ -67,19 +67,14 @@ export class ChannelUsersComponent implements OnInit {
         console.log(this.errors)
       }
       else {
-        if(this.currentUser.friendsList.length > 1){
           for (let x of this.currentUser.friendsList){
             if (data['_id'] == x){
               this.errors = 'You added the same friend twice!'
               console.log(this.errors);
               return this.errors;
             }
-            else {
-              continue;
-            }
           }
-        }
-        else {
+          console.log('wowwowoowowowowoowowowowowoowowoww')
           this.errors = null;
           let new_friend = {
             id: this.currentUser.id,
@@ -89,8 +84,9 @@ export class ChannelUsersComponent implements OnInit {
           let friend = this._httpService.updateUser(new_friend);
           friend.subscribe(data => {
             this.updateCurrentUser();
+            this.user.name = '';
+            this.hideModal();
           });
-        }
       };
     }
   )};
