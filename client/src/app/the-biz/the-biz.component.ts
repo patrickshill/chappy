@@ -18,11 +18,10 @@ export class TheBizComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.messages = [];
-    this.getMessages();
+    this.getMessages(); 
   }
 
-  ngAfterViewInit() {
-    
+  ngAfterViewInit(){
     let chatlog = document.getElementById("chat-content");
     chatlog.scrollTop = chatlog.scrollHeight;
   }
@@ -36,6 +35,8 @@ export class TheBizComponent implements OnInit, AfterViewInit {
           let chatlog = document.getElementById("chat-content");
           chatlog.scrollTop = chatlog.scrollHeight;
         },1);
+        let chatlog = document.getElementById("chat-content");
+        chatlog.scrollTop = chatlog.scrollHeight;
     })
   }
 

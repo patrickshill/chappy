@@ -19,6 +19,7 @@ import { ChannelUsersComponent } from './channel-users/channel-users.component';
 import { MessageFieldComponent } from './message-field/message-field.component';
 import { WebsocketService } from './websocket.service';
 import { ChatService } from './chat.service';
+import {Ng2Webstorage} from 'ngx-webstorage';
 
 @NgModule({
   declarations: [
@@ -40,8 +41,8 @@ import { ChatService } from './chat.service';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    Ng2Webstorage
   ],
   providers: [HttpService, WebsocketService, ChatService],
   bootstrap: [AppComponent]

@@ -24,11 +24,11 @@ io.on("connection", (socket) => {
 
     socket.on('message', (message => {
         console.log("Message Received: " + message );
-        io.emit('message', {type: 'new-message', text: message});
+        io.emit('message', message);
     }));
 
 })
-
+app.listen(8001);
 http.listen(8000);
 
 

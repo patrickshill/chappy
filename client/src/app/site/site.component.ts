@@ -1,15 +1,16 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import {LocalStorageService} from 'ngx-webstorage';
 import anime from 'animejs';
-
 
 @Component({
   selector: 'app-site',
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.css']
 })
-export class SiteComponent implements OnInit, AfterViewInit {
+export class SiteComponent implements OnInit {
+  logged: any;
   regForm: any;
   loginForm: any;
   regErrors: any;
@@ -21,10 +22,12 @@ export class SiteComponent implements OnInit, AfterViewInit {
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private localStorage: LocalStorageService
   ) { }
 
   ngOnInit() {
+    this.logged = this.localStorage.retrieve('logged');
     this.regErrors = [];
     this.loginErrors = [];
     this.regForm = {
@@ -107,7 +110,8 @@ export class SiteComponent implements OnInit, AfterViewInit {
         console.log("Errors in site.component.ts", data);
       } else {
         console.log("loggin in yo");
-        this._httpService.user = {
+        //creating local storage for user id for login
+        this.localStorage.store('user', {
           id: data["_id"],
           username: data["username"],
           email: data["email"],
@@ -116,9 +120,15 @@ export class SiteComponent implements OnInit, AfterViewInit {
           channels: data["channels"],
           dm_channels: data["dm_channels"],
           friendsList: data["friendsList"]
-        }
-        this._httpService.logged = true;
-        console.log(this._httpService.user, this._httpService.logged)
+        });
+        //creating local storage for loggin status
+        this.localStorage.store('logged', true);
+        this.logged = true;
+        //retrieving local storage so i can see it...
+        console.log(this.localStorage.retrieve('user'), "localstorage");
+        console.log(this.localStorage.retrieve('logged'), "localstorage");
+        // this._httpService.logged = true;
+
         this.hideLoginModal();
         this.loginForm = {
           email: "",
@@ -129,7 +139,9 @@ export class SiteComponent implements OnInit, AfterViewInit {
   }
 
   logoutUser(){
-    this._httpService.logged = false;
+    this.localStorage.clear();
+    this.localStorage.store('logged', false);
+    this.logged = false;
   }
   
   // Show/hide registration modal

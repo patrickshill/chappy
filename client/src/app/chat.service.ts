@@ -17,7 +17,7 @@ export class ChatService {
       .pipe(map((response: any): any => {
         return response;
       })
-    )}
+    )};
 
   sendMsg(msg) {
     this.messages.next(msg);
