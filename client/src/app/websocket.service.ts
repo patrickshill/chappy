@@ -11,6 +11,7 @@ export class WebsocketService {
 
   private socket; // socket that connects to socket.io server
 
+  channelusers: any;
   bizComponent: any;
   constructor() { }
 
@@ -22,6 +23,7 @@ export class WebsocketService {
       this.socket.on('message', (data) => {
         console.log("Received message from Websocket Server")
         this.bizComponent.getMessages();
+        this.channelusers.reloadModal();
         observer.next(data);
       })
       

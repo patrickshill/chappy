@@ -258,8 +258,10 @@ function getOneText(req,res) {
 // Update Text Channel (add or delete message, or update name or port)
 function updateTextChannel(req,res) {
     if ('content' in req.body){
+        console.log(req.body, 'made it iiiinnnnn')
         models.TextChannels.findById(req.body.T_id)
         .then(data=>{
+            console.log(data, 'for real this time');
             data.messages.push(req.body);
             return data.save();
         })
