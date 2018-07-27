@@ -511,3 +511,57 @@ p {
 .message-date {
     color: rgb(119, 119, 119);
 }
+
+/* DM chat styles */
+.dm-modal {
+    padding: 20px;
+    position: fixed;
+    z-index: 50;
+    top: 5vh;
+    left: calc(50vw - 200px);
+    width: 400px;
+    min-height: 480px;
+    text-align: center;
+    background-color: white;
+}
+.dm-modal .close-modal {
+    z-index: 60;
+    left: 370px;
+}
+.dm-modal input[type=text] {
+    padding: 5px;
+    padding-right: 80px;
+    width: 100%;
+    height: 36px;
+    border-radius: 5px;
+    border: 2px solid lightgrey;
+}
+.dm-modal input[type=submit] {
+    position: absolute;
+    left: 290px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+}
+.dm-messages {
+    margin: 20px auto;
+    padding: 10px;
+    height: 400px;
+    background-color: rgb(235, 235, 235);
+    overflow-y: scroll;
+    text-align: left;
+}
+.dm-message {
+    display:block;
+    margin: 4px;
+}
+.dm-message p {
+    line-height: 20px;
+}
+.dm-username {
+    font-weight: bold;
+    color: black;
+}
+.dm-content {
+    color: black;
+}
