@@ -12,7 +12,7 @@ import { LocalStorageService } from '../../../node_modules/ngx-webstorage';
 })
 export class MessageFieldComponent implements OnInit {
   user = this.localStorage.retrieve('user');
-  message: FormGroup;
+  form_message: FormGroup;
   id = this.user._id;
   errors: any;
   message_list: any;
@@ -34,7 +34,7 @@ export class MessageFieldComponent implements OnInit {
 
   ngOnInit() {
     console.log("please help me");
-    this.message = this.fb.group({
+    this.form_message = this.fb.group({
       U_id: this.id,
       content: '',
       T_id: this._httpService.sub_id,
@@ -43,8 +43,8 @@ export class MessageFieldComponent implements OnInit {
     });
 
     this.chat.messages.subscribe(msg => {
-      this.message = msg;
-      console.log(this.message);
+      this.random_message = msg;
+      console.log(this.random_message);
     })
 
   }
@@ -59,7 +59,7 @@ export class MessageFieldComponent implements OnInit {
       else {
         this._httpService.getMessages();
         
-        this.message = this.fb.group({
+        this.form_message = this.fb.group({
           U_id: this.id,
           content: '',
           T_id: this._httpService.sub_id,
@@ -69,9 +69,6 @@ export class MessageFieldComponent implements OnInit {
       }
     })
     this.chat.sendMsg("testmsg");
-    
-    //try dis
-    return false;
   }
 
 
