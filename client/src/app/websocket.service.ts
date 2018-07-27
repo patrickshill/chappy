@@ -15,7 +15,7 @@ export class WebsocketService {
   constructor() { }
 
   connect(): Rx.Subject<MessageEvent> {
-    this.socket = io(environment.ws_url);
+    this.socket = io();
 
     // define observable which observes incoming messages from socket.io server
     let observable = new Observable(observer => {
