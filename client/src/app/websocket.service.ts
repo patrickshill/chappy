@@ -15,7 +15,7 @@ export class WebsocketService {
   constructor() { }
 
   connect(): Rx.Subject<MessageEvent> {
-    this.socket = io();
+    this.socket = io.connect('http://192.168.0.249:8000');
 
     // define observable which observes incoming messages from socket.io server
     let observable = new Observable(observer => {
@@ -24,6 +24,7 @@ export class WebsocketService {
         this.bizComponent.getMessages();
         observer.next(data);
       })
+      
   });
 
     // define observer which listens to messages from other components and sends
