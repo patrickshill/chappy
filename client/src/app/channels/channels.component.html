@@ -1,8 +1,19 @@
 <div class="chap-nav"><a [routerLink]="['/home/splash']">HOME</a></div>
 <br>
-<a (click)="addChannel()" class="channel-button" id="channel-button-add">
+<a (click)="showCreateModal()" class="channel-button" id="channel-button-add">
     <div class="horizontal-plus"></div>
     <div class="vertical-plus"></div>
 </a>
 <a class="channel-button" (click)="getMain()">Chappy</a><br>
 <a class="channel-button" *ngFor="let channel of abb_channel" (click)="getChannelId(channel._id)">{{channel.channelName}}</a><br>
+
+<div *ngIf="showCreate" class="login-modal-fade">
+    <div class="login-modal-form">
+        <span (click)="hideCreateModal()" class="close-modal">X</span>
+        <form (submit)="addChannel()">
+            <p>Create New Channel:</p>
+            <p><input type="text" name="newChannel.channelName" [(ngModel)]="newChannel.channelName"></p>
+            <p><input class="btn btn-primary" type="submit" value="Create"></p>
+        </form>
+    </div>
+</div>

@@ -23,7 +23,7 @@ export class MessageFieldComponent implements OnInit {
   {
     this._httpService.msgField = this;
     chat.messages.subscribe(msg => {
-      console.log('response from websocket server')
+      // console.log('response from websocket server')
     })
   }
 
@@ -33,7 +33,6 @@ export class MessageFieldComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("please help me");
     this.form_message = this.fb.group({
       U_id: this.id,
       content: '',
@@ -44,7 +43,6 @@ export class MessageFieldComponent implements OnInit {
 
     this.chat.messages.subscribe(msg => {
       this.random_message = msg;
-      console.log(this.random_message);
     })
 
   }

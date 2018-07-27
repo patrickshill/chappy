@@ -1,4 +1,16 @@
-<div class="server-name">Server Name</div>
+<div class="server-name" *ngIf="!channelName">Server Name</div>
+<div class="server-name" (click)="showCreateModal()">{{channelName}}</div>
 <div (click)="passSub(channel._id)" class="channel-link" *ngFor="let channel of subchannels">
   <a >#{{ channel.channelName }}</a>
+</div>
+
+<div *ngIf="showCreate" class="login-modal-fade">
+    <div class="login-modal-form">
+        <span (click)="hideCreateModal()" class="close-modal">X</span>
+        <form (submit)="addSubChannel()">
+            <p>Add a New Sub Channel:</p>
+            <p><input type="text" name="newSub.textChannel" [(ngModel)]="newSub.textChannel"></p>
+            <p><input class="btn btn-primary" type="submit" value="Create"></p>
+        </form>
+    </div>
 </div>

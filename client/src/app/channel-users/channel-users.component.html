@@ -1,4 +1,17 @@
-<h4>Online</h4>
+<a (click)="showModal()">Add New Friends</a>
+
+<div *ngIf="show" class="login-modal-fade">
+    <div class="login-modal-form">
+        <span (click)="hideModal()" class="close-modal">X</span>
+        <form (submit)="addSubChannel()">
+            <p>Find Friends:</p>
+            <p><input type="text" ></p>
+            <p><input class="btn btn-primary" type="submit" value="Add"></p>
+        </form>
+    </div>
+</div>
+
+<h4>Online</h4> 
 <div class="channel-user-container">
   <div class="channel-user-avatar">
     <div class="channel-user-status online"></div>
@@ -34,4 +47,4 @@
       <div class="channel-user-status"></div>
     </div>
     <div class="channel-user-username">Example user5</div>
-</div>  
+</div>

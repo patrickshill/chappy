@@ -144,26 +144,37 @@ function getOneChannel(req,res) {
 // Update Channel Group (add users/subchannels)
 function updateChannel(req,res) {
     if ('user' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$push: {users: req.body._id }})
-        .then(data => res.json(data))
-        .catch(errs => res.json(errs));
+        // models.Channels.findByIdAndUpdate(req.body.id, {$push: {users: req.body._id }})
+        // .then(data => res.json(data))
+        // .catch(errs => res.json(errs));
+        console.log('unfinished add user')
     }
     if ('textChannel' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$push: {textChannels: req.body._id }})
-        .then(data => res.json(data))
+        models.TextChannels.create({channelName: req.body.textChannel})
+        .then(text => {
+            models.Channels.findByIdAndUpdate(req.body.id, {$push: {textChannels: text._id}})
+            .then(data => {
+                res.json(data);
+            })
+            .catch(errs => res.json(errs));
+        })
         .catch(errs => res.json(errs));
+        return this;
     }
     if ('voiceChannel' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$push: {voiceChannels: req.body._id }})
-        .then(data => res.json(data))
-        .catch(errs => res.json(errs));
+        // models.Channels.findByIdAndUpdate(req.body.id, {$push: {voiceChannels: req.body._id }})
+        // .then(data => res.json(data))
+        // .catch(errs => res.json(errs));
+        console.log('unfinished add voice')
     }
     if ('channelName' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, req.body)
-        .then(data => res.json(data))
-        .catch(errs => res.json(errs));
+        // models.Channels.findByIdAndUpdate(req.body.id, req.body)
+        // .then(data => res.json(data))
+        // .catch(errs => res.json(errs));
+        console.log('unfinished change channelname')
     }
     else {
+        console.log(req.body)
         console.log("You did not format your input properly.")
     }
 }

@@ -12,6 +12,7 @@ export class HttpService {
   subComponent: any;
   bizComponent: any;
   msgField: any;
+  chapp: any;
 
   constructor(private _http: HttpClient, private localStorage: LocalStorageService) {}
 
@@ -53,8 +54,8 @@ export class HttpService {
     return this._http.get("/api/channels/"+id);
   }
 
-  addToChannel(id, data){
-    return this._http.patch("/api/channels/update/"+id, data);
+  addToChannel(data){
+    return this._http.post("/api/channels/update", data);
   }
 
   removeFromChannel(id, data){
@@ -104,6 +105,8 @@ export class HttpService {
     this.sub_id = id;
     this.bizComponent.ngOnInit();
     this.msgField.ngOnInit();
+    this.chapp.showSub();
+    this.chapp.ngOnInit();
   };
 
   getMessages(){

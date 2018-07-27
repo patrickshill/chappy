@@ -30,7 +30,6 @@ export class TheBizComponent implements OnInit, AfterViewInit {
     let sub = this._httpService.getOneText(this._httpService.sub_id);
     sub.subscribe(data => {
         this.messages = data["messages"];
-        console.log(this.messages, "im the real biz");
         setTimeout(function(){ 
           let chatlog = document.getElementById("chat-content");
           chatlog.scrollTop = chatlog.scrollHeight;

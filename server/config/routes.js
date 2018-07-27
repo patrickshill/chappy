@@ -46,7 +46,7 @@ function router(app) {
     app.get("/api/channels/:id", api.getOneChannel);
 
     // Get Update Channel Group (add users/subchannels)
-    app.patch("/api/channels/update/:id", api.updateChannel);
+    app.post("/api/channels/update", api.updateChannel);
 
     // Get Remove users/subchannels
     app.patch("/api/channels/remove/:id", api.removeFromChannels);

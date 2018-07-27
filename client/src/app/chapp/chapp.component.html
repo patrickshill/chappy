@@ -16,7 +16,8 @@
 
     <div class="chat-header">
       <div class="chat-info">
-        <h2>#General</h2>
+        <h2 *ngIf="!subChannel">Channel Name</h2>
+        <h2 *ngIf="subChannel">{{subChannel}}</h2>
       </div>
       <div class="profile">
         <app-profile></app-profile>

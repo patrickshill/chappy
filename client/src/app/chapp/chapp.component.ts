@@ -1,16 +1,29 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../http.service';
 
 @Component({
   selector: 'app-chapp',
   templateUrl: './chapp.component.html',
   styleUrls: ['./chapp.component.css']
 })
-export class ChappComponent implements OnInit, AfterViewInit {
+export class ChappComponent implements OnInit {
 
-  constructor() { }
+
+  subChannel: any;
+
+  constructor(private _httpService: HttpService) {
+    this._httpService.chapp = this;
+  }
 
   ngOnInit() {
     this.scrollChatDown();
+  }
+
+  showSub(){
+    let sub = this._httpService.getOneText(this._httpService.sub_id);
+    sub.subscribe(data => {
+      this.subChannel = data['channelName'];
+    })
   }
 
   scrollChatDown() {
@@ -18,7 +31,4 @@ export class ChappComponent implements OnInit, AfterViewInit {
     chatlog.scrollTop = chatlog.scrollHeight;
   }
 
-  ngAfterViewInit() {
-    console.log("after view ran")
-  }
 }

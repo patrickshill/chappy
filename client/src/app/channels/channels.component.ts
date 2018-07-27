@@ -16,6 +16,8 @@ export class ChannelsComponent implements OnInit {
   channel: any;
   abb_channel: Object[];
   new_id: any;
+  newChannel: any;
+  showCreate: Boolean;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -26,27 +28,38 @@ export class ChannelsComponent implements OnInit {
   ngOnInit() {
     this.updateUser();
     this.user = this.localStorage.retrieve('user');
+    this.newChannel = {
+      U_id: this.user.id,
+      channelName: ""
+    };
   }
 
   // Adding channel group and running service method to update user info
   addChannel(){
-    let genericData = {
-      U_id: this.user._id,
-      channelName: 'New Channel',
-    }
-    let new_channel = this._httpService.createChannel(genericData);
+    let new_channel = this._httpService.createChannel(this.newChannel);
     new_channel.subscribe(data => {
       console.log(data);
       this.new_id = data["_id"];
       this.ngOnInit();
     });
-    
+    this.hideCreateModal()
+    this.newChannel = {
+      U_id: this.user.id,
+      channelName: ""
+    };
+  }
+
+  showCreateModal() {
+    this.showCreate = true;
+  }
+  hideCreateModal() {
+    this.showCreate = false;
   }
   
   updateUser(){
     let obs = this._httpService.getOneUser(this.user.id);
-    obs.subscribe(data=>{this.localStorage.retrieve('user')
-      this.localStorage.store('user', {
+    obs.subscribe(data=> {
+      this.user = {
           id: data["_id"],
           username: data["username"],
           email: data["email"],
@@ -55,7 +68,8 @@ export class ChannelsComponent implements OnInit {
           channels: data["channels"],
           dm_channels: data["dm_channels"],
           friendsList: data["friendsList"]
-        });
+        };
+        this.localStorage.store('user', this.user);
         this.AbbreviateChannels();
       })
   }
@@ -64,7 +78,7 @@ export class ChannelsComponent implements OnInit {
   AbbreviateChannels(){
     this.abb_channel = [];
     if (this.user.channels.length > 0){
-      for (var x of this.localStorage.retrieve('user.channels')){
+      for (var x of this.user.channels){
         let channel = this._httpService.getOneChannel(x);
         channel.subscribe(data => {
           data["channelName"] = data["channelName"].match(/\b\w/g).join('');

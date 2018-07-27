@@ -149,7 +149,6 @@ export class SiteComponent implements OnInit {
   
   // Show/hide registration modal
   showRegistrationModal() {
-    console.log("Showing registration modal");
     this.showRegistration = true;
   }
   hideRegistrationModal() {
@@ -158,7 +157,6 @@ export class SiteComponent implements OnInit {
 
   // Show/hide login modal
   showLoginModal() {
-    console.log("Showing registration modal");
     this.showLogin = true;
   }
   hideLoginModal() {

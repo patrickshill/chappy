@@ -11,12 +11,18 @@ export class SubChannelsComponent implements OnInit {
   constructor(private _httpService: HttpService) {
     this._httpService.subComponent = this;
   }
-
+  channelName: String;
   subchannels: Object[];
   textchannels: Object[];
   voicechannels: Object[];
+  newSub: any;
+  showCreate: Boolean;
 
   ngOnInit() {
+    this.newSub = {
+      id: this._httpService.channel_id,
+      textChannel: ''
+    }
     this.getSubChannels();
   }
 
@@ -30,6 +36,7 @@ export class SubChannelsComponent implements OnInit {
         console.log("errors");
       }
       else {
+        this.channelName = data["channelName"];
         this.textchannels = data["textChannels"];
         this.voicechannels = data["voiceChannels"];
         for (let j in this.textchannels){
@@ -39,19 +46,32 @@ export class SubChannelsComponent implements OnInit {
           })
         }
       }
-        // for (let j of this.textchannels){
-      //   let sub = this._httpService.getOneVoice(j);
-      //   sub.subscribe(data => {
-      //     this.subchannels.push(data);
-      //   })
-      // }
-      console.log(this.subchannels);
     });
   };
 
   // Pass Sub ID to Service for biz
   passSub(id){
     this._httpService.subChat(id);
+  }
+
+  addSubChannel(){
+    let new_channel = this._httpService.addToChannel(this.newSub);
+    new_channel.subscribe(data => {
+      this.getSubChannels();
+    })
+    this.hideCreateModal();
+    this.newSub = {
+      id: this._httpService.channel_id,
+      textChannel: ''
+    }
+  }
+
+  showCreateModal() {
+    this.showCreate = true;
+  }
+
+  hideCreateModal() {
+    this.showCreate = false;
   }
 
 }
