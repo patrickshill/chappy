@@ -67,9 +67,28 @@ function addAnything(req,res){
     if ('F_id' in req.body){
         models.Users.findByIdAndUpdate(req.body.id, {$push: {friendsList: req.body.F_id}})
             .then(data=>{
-                console.log(data);
-                res.json(data)})
+                var text_default = new models.TextChannels();
+                    text_default.channelName = 'General';
+                    text_default.save();
+                var new_channel = new models.Channels();
+                new_channel.channelName = req.body.channelName;
+                new_channel.users.push(data["_id"]);
+                new_channel.users.push(req.body.F_id);
+                new_channel.textChannels.push(text_default._id);
+                new_channel.save();
+                return new_channel;
+            })
+            .then(data => {
+                models.Users.findByIdAndUpdate(req.body.id, {$push: {dm_channels: data["_id"]}})
+                .then(data=>res.json(data))
+                .catch(errs=>res.json(errs))
+                models.Users.findByIdAndUpdate(req.body.F_id, {$push: {friendsList: req.body.id, dm_channels: data['_id']}})
+                    .then(data=>res.json(data))
+                    .catch(errs=>res.json(errs))
+            })
             .catch(errs=>res.json(errs))
+
+        
     }
     if ('M_id' in req.body){
         models.Users.findByIdAndUpdate(req.body.id, {$push: {dm_channels: req.body.M_id}})
