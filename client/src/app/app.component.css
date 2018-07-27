@@ -120,6 +120,7 @@
 }
 #chappy-cat {
     position: absolute;
+    cursor: -webkit-grab;
     top: -100px;
     left: 175px;
     z-index: 10;
@@ -390,6 +391,13 @@
     width: 240px;
     height: calc(100vh - 60px);
     background-color: rgb(46, 44, 48);
+}
+#add-friend-icon {
+    margin-right: 10px;
+    height: 30px;
+}
+#message-icon {
+    height: 30px;
 }
 .channel-users h4 {
     margin: 20px auto 10px auto;

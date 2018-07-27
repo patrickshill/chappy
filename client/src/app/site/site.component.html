@@ -14,15 +14,35 @@
       <!-- LINKS -->
       <div class="nav-links">
         <a *ngIf="logged" [routerLink]="['/chapp']">
-          <button class="btn-nav btn-app">Open</button>
+          <button 
+          id="open-btn"
+          class="btn-nav btn-app"
+          (mouseenter)="openMouseEnter()"
+          (mouseleave)="openMouseLeave()"
+          >Open</button>
         </a>
         <!-- <a [routerLink]="['login']"> -->
-          <button *ngIf="!logged" (click)="showLoginModal()" class="btn-nav btn-primary">Login</button>
+          <button *ngIf="!logged"
+          id="login-btn"
+          (click)="showLoginModal()" 
+          (mouseenter)="loginMouseEnter()"
+          (mouseleave)="loginMouseLeave()"
+          class="btn-nav btn-primary">Login</button>
         <!-- </a> -->
         <!-- <a [routerLink]="['registration']"> -->
-          <button *ngIf="!logged" (click)="showRegistrationModal()" class="btn-nav btn-secondary">Register</button>
+          <button *ngIf="!logged"
+          id="register-btn"
+          (click)="showRegistrationModal()"
+          (mouseenter)="regMouseEnter()"
+          (mouseleave)="regMouseLeave()"
+          class="btn-nav btn-secondary">Register</button>
         <!-- </a> -->
-        <button *ngIf="logged" (click)="logoutUser()" class="btn-nav">Logout</button>
+        <button *ngIf="logged"
+        id="logout-btn"
+        (click)="logoutUser()"
+        (mouseenter)="logoutMouseEnter()"
+        (mouseleave)="logoutMouseLeave()"
+        class="btn-nav">Logout</button>
       </div>
 
       
@@ -41,7 +61,11 @@
           </div>
         </div>
         <div class="row">
-          <img (click)="animateCat()" src="../../assets/chappyCat.svg" alt="" id="chappy-cat">
+          <img 
+          (click)="petCat()" 
+          (mouseenter)="mouseEnterCat()"
+          (mouseleave)="mouseLeaveCat()"
+           src="../../assets/chappyCat.svg" alt="" id="chappy-cat">
           <div class="screenshot-container">
             <img id="chappy-screenshot" src="../../assets/chappy-screenshot.png" alt="">
           </div>
