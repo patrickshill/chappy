@@ -60,6 +60,8 @@ export class SiteComponent implements OnInit {
   }
 
   mouseEnterGetStarted() {
+    let btn = document.getElementById("get-started");
+    anime.remove(btn);
     this.getStartedHover = anime({
       targets: '#get-started',
       scale: 1.1,
@@ -67,7 +69,8 @@ export class SiteComponent implements OnInit {
     })
   }
   mouseLeaveGetStarted() {
-    anime.remove(this);
+    let btn = document.getElementById("get-started");
+    anime.remove(btn);
     this.getStartedHover = anime({
       targets: '#get-started',
       scale: 1,
