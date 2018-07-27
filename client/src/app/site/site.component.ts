@@ -71,7 +71,6 @@ export class SiteComponent implements OnInit {
   }
 
   petCat() {
-    console.log("pet da cat");
     if(this.catIntroCompleted == true) {
       let cat = document.getElementById("chappy-cat");
       anime.remove(cat);
