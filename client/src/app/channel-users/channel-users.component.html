@@ -13,14 +13,14 @@
 </div>
 
 <h4>Online</h4> 
-<div class="wrapper" *ngIf="allFriends">
+
   <div class="channel-user-container" *ngFor="let friend of allFriends">
     <div class="channel-user-avatar">
       <div class="channel-user-status online"></div>
     </div>
     <div class="channel-user-username">{{friend.username}}</div>
   </div>
-</div>
+
 <div class="channel-user-container">
   <div class="channel-user-avatar">
     <div class="channel-user-status away"></div>
