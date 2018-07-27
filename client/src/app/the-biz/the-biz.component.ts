@@ -18,7 +18,12 @@ export class TheBizComponent implements OnInit {
 
   ngOnInit() {
     this.messages = [];
-    this.getMessages();
+    this.getMessages(); 
+  }
+
+  ngAfterViewInit(){
+    let chatlog = document.getElementById("chat-content");
+    chatlog.scrollTop = chatlog.scrollHeight;
   }
 
   getMessages(){
@@ -26,6 +31,8 @@ export class TheBizComponent implements OnInit {
     sub.subscribe(data => {
         this.messages = data["messages"];
         console.log(this.messages, "im the real biz");
+        let chatlog = document.getElementById("chat-content");
+        chatlog.scrollTop = chatlog.scrollHeight;
     })
   }
 

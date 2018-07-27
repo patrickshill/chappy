@@ -1,22 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
-  logged = false;
-  user = {
-    id: '',
-    username: '',
-    email: '',
-    avatar: '',
-    status: '',
-    channels: [],
-    dm_channels: [],
-    friendsList: []
-  };
-
   channel_id: any;
   sub_id: any;
 
@@ -24,7 +13,7 @@ export class HttpService {
   bizComponent: any;
   msgField: any;
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient, private localStorage: LocalStorageService) {}
 
   createUser(data){
     return this._http.post("/api/users", data);

@@ -3,6 +3,7 @@ import { HttpService } from '../http.service';
 import { SubChannelsComponent } from '../sub-channels/sub-channels.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { LocalStorageService } from '../../../node_modules/ngx-webstorage';
 
 @Component({
   selector: 'app-channels',
@@ -11,25 +12,26 @@ import { Location } from '@angular/common';
 })
 export class ChannelsComponent implements OnInit {
 
-  user = this._httpService.user;
+  user = this.localStorage.retrieve('user');
   channel: any;
   abb_channel: Object[];
   new_id: any;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router, 
+    private localStorage: LocalStorageService
   ) {}
 
   ngOnInit() {
     this.updateUser();
-    this.user = this._httpService.user;
+    this.user = this.localStorage.retrieve('user');
   }
 
   // Adding channel group and running service method to update user info
   addChannel(){
     let genericData = {
-      U_id: this._httpService.user.id,
+      U_id: this.user._id,
       channelName: 'New Channel',
     }
     let new_channel = this._httpService.createChannel(genericData);
@@ -42,9 +44,9 @@ export class ChannelsComponent implements OnInit {
   }
   
   updateUser(){
-    let obs = this._httpService.getOneUser(this._httpService.user.id);
-    obs.subscribe(data=>{
-      this._httpService.user = {
+    let obs = this._httpService.getOneUser(this.user.id);
+    obs.subscribe(data=>{this.localStorage.retrieve('user')
+      this.localStorage.store('user', {
           id: data["_id"],
           username: data["username"],
           email: data["email"],
@@ -53,7 +55,7 @@ export class ChannelsComponent implements OnInit {
           channels: data["channels"],
           dm_channels: data["dm_channels"],
           friendsList: data["friendsList"]
-        };
+        });
         this.AbbreviateChannels();
       })
   }
@@ -61,8 +63,8 @@ export class ChannelsComponent implements OnInit {
   // Make a list of abbreviated channel names for display
   AbbreviateChannels(){
     this.abb_channel = [];
-    if (this._httpService.user.channels.length > 0){
-      for (var x of this._httpService.user.channels){
+    if (this.user.channels.length > 0){
+      for (var x of this.localStorage.retrieve('user.channels')){
         let channel = this._httpService.getOneChannel(x);
         channel.subscribe(data => {
           data["channelName"] = data["channelName"].match(/\b\w/g).join('');
@@ -79,7 +81,7 @@ export class ChannelsComponent implements OnInit {
   }
 
   getMain(){
-    this._httpService.showSub("5b5a13f1da275949507f8596");
+    this._httpService.showSub("5b5a0d8640d18c8238ec5edb");
   }
 
 

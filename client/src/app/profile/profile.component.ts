@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
+import { LocalStorageService } from '../../../node_modules/ngx-webstorage';
 
 @Component({
   selector: 'app-profile',
@@ -9,9 +10,9 @@ import { HttpService } from '../http.service';
 export class ProfileComponent implements OnInit {
 
 
-  user = this._httpService.user
+  user = this.localStorage.retrieve('user')
 
-  constructor(private _httpService: HttpService) { }
+  constructor(private _httpService: HttpService, private localStorage: LocalStorageService) { }
 
   ngOnInit() {
     this.user;

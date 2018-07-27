@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { FormBuilder, FormGroup, Validators } from '../../../node_modules/@angular/forms';
 import { ChatService } from '../chat.service';
-import { WebsocketService } from '../websocket.service';
+import { LocalStorageService } from '../../../node_modules/ngx-webstorage';
+
 
 @Component({
   selector: 'app-message-field',
@@ -10,15 +11,15 @@ import { WebsocketService } from '../websocket.service';
   styleUrls: ['./message-field.component.css']
 })
 export class MessageFieldComponent implements OnInit {
-
+  user = this.localStorage.retrieve('user');
   message: FormGroup;
-  id = this._httpService.user.id;
+  id = this.user._id;
   errors: any;
   message_list: any;
-  userName = this._httpService.user.username;
-  userAvatar = this._httpService.user.avatar;
+  userName = this.user.username;
+  userAvatar = this.user.avatar;
 
-  constructor(private _httpService: HttpService, private fb: FormBuilder, private chat: ChatService)
+  constructor(private _httpService: HttpService, private fb: FormBuilder, private chat: ChatService, private localStorage: LocalStorageService)
   {
     this._httpService.msgField = this;
     chat.messages.subscribe(msg => {
@@ -48,10 +49,6 @@ export class MessageFieldComponent implements OnInit {
 
   }
 
-  // sendMsg(){
-    // this.chat.sendMsg("testmsg");
-  // }
-
   sendMessage(post){
     let messages = this._httpService.updateTextChannel(post);
     messages.subscribe(data => {
@@ -72,6 +69,10 @@ export class MessageFieldComponent implements OnInit {
       }
     })
     this.chat.sendMsg("testmsg");
+    
+    //try dis
+    return false;
   }
+
 
 }
