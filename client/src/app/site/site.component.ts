@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import anime from 'animejs';
+
 
 @Component({
   selector: 'app-site',
   templateUrl: './site.component.html',
   styleUrls: ['./site.component.css']
 })
-export class SiteComponent implements OnInit {
+export class SiteComponent implements OnInit, AfterViewInit {
   regForm: any;
   loginForm: any;
   regErrors: any;
   loginErrors: any;
   showRegistration = false;
   showLogin = false;
+  popCat: any;
+  getStartedHover: any;
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -36,6 +40,40 @@ export class SiteComponent implements OnInit {
     }
   }
   
+  ngAfterViewInit() {
+    this.popCat = anime({
+      targets: '#chappy-cat',
+      translateY: [
+        { value: -200, duration: 0 },
+        { value: 100, duration: 4000},
+        { value: 0, duration: 1000}
+      ],
+      duration: 10000
+    })
+  }
+
+  animateCat() {
+    this.popCat.play();
+  }
+
+  mouseEnterGetStarted() {
+    this.getStartedHover = anime({
+      targets: '#get-started',
+      scale: 1.1,
+      duration: 1000
+    })
+  }
+  mouseLeaveGetStarted() {
+    anime.remove(this);
+    this.getStartedHover = anime({
+      targets: '#get-started',
+      scale: 1,
+      duration: 1000
+    })
+  }
+
+
+
 
   // Register user
   userRegistration(){

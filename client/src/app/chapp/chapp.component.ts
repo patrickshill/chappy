@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-chapp',
   templateUrl: './chapp.component.html',
   styleUrls: ['./chapp.component.css']
 })
-export class ChappComponent implements OnInit {
+export class ChappComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
@@ -16,5 +16,9 @@ export class ChappComponent implements OnInit {
   scrollChatDown() {
     let chatlog = document.getElementById("chat-content");
     chatlog.scrollTop = chatlog.scrollHeight;
+  }
+
+  ngAfterViewInit() {
+    console.log("after view ran")
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpService } from '../http.service';
 import { WebsocketService } from '../websocket.service';
 
@@ -7,7 +7,7 @@ import { WebsocketService } from '../websocket.service';
   templateUrl: './the-biz.component.html',
   styleUrls: ['./the-biz.component.css']
 })
-export class TheBizComponent implements OnInit {
+export class TheBizComponent implements OnInit, AfterViewInit {
 
   messages: any;
 
@@ -21,12 +21,27 @@ export class TheBizComponent implements OnInit {
     this.getMessages();
   }
 
+  ngAfterViewInit() {
+    
+    let chatlog = document.getElementById("chat-content");
+    chatlog.scrollTop = chatlog.scrollHeight;
+  }
+
   getMessages(){
     let sub = this._httpService.getOneText(this._httpService.sub_id);
     sub.subscribe(data => {
         this.messages = data["messages"];
         console.log(this.messages, "im the real biz");
+        setTimeout(function(){ 
+          let chatlog = document.getElementById("chat-content");
+          chatlog.scrollTop = chatlog.scrollHeight;
+        },1);
     })
+  }
+
+  scrollDownChat() {
+    let chatlog = document.getElementById("chat-content");
+    chatlog.scrollTop = chatlog.scrollHeight;
   }
 
   

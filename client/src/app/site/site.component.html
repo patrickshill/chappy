@@ -6,7 +6,9 @@
 
       <!-- LOGO -->
       <div class="logo">
-        <a id="logo-text" [routerLink]="['splash']"><h1 >Chappy</h1></a>
+        <a id="logo-text" [routerLink]="['splash']">
+          <img id="logo" src="../../assets/chappyLogo.svg" alt="">
+        </a>
       </div>
 
       <!-- LINKS -->
@@ -22,7 +24,30 @@
         <!-- </a> -->
         <button *ngIf="_httpService.logged" (click)="logoutUser()" class="btn-nav">Logout</button>
       </div>
+
       
+    </div>
+    
+    <div class="row">
+      <div class="content-container">
+        <div class="row">
+          <div class="content-left">
+            <button class="btn-big" id="get-started" (click)="showRegistrationModal()" (mouseenter)="mouseEnterGetStarted()" (mouseleave)="mouseLeaveGetStarted()">Get started!</button>
+          </div>
+          <div class="content-right">
+            <h2>Stay connected with Chappy</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt labore accusantium fuga iusto tenetur fugiat provident dolores magnam tempore odio placeat, dolorum dolor est adipisci? Minima doloremque vel magnam quo.</p>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt labore accusantium fuga iusto tenetur fugiat provident dolores magnam tempore odio placeat, dolorum dolor est adipisci? Minima doloremque vel magnam quo.</p>
+          </div>
+        </div>
+        <div class="row">
+          <img (click)="animateCat()" src="../../assets/chappyCat.svg" alt="" id="chappy-cat">
+          <div class="screenshot-container">
+          </div>
+        </div>
+        
+        <img src="../../assets/wave.svg" alt="" id="wave-image">
+      </div>
       
     </div>
   </div>
