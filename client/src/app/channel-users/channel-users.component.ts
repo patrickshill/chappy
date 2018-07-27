@@ -3,6 +3,7 @@ import { HttpService } from '../http.service';
 import { FormBuilder, FormGroup, Validators } from '../../../node_modules/@angular/forms';
 import { LocalStorageService } from 'ngx-webstorage';
 import { ChatService } from '../chat.service';
+import { WebsocketService } from '../websocket.service';
 
 @Component({
   selector: 'app-channel-users',
@@ -21,10 +22,11 @@ export class ChannelUsersComponent implements OnInit {
   chatFriend: any;
   privateChat: any;
   messages: any;
-
+  MESSAGECHAT: any;
   form_message: FormGroup;
 
-  constructor(private _httpService: HttpService, private fb: FormBuilder, private localStorage: LocalStorageService, private chat: ChatService) {
+  constructor(private _httpService: HttpService, private fb: FormBuilder, private localStorage: LocalStorageService, private chat: ChatService, private wsService: WebsocketService) {
+    this.wsService.channelusers = this;
     this.chat.messages.subscribe(msg => {
       // console.log('response from websocket server')
     })
@@ -43,7 +45,7 @@ export class ChannelUsersComponent implements OnInit {
     });
 
     this.updateCurrentUser();
-    this.getFriends();
+    // this.getFriends();
     this.chatFriend = {
       id: '',
       username: '',
@@ -68,7 +70,7 @@ export class ChannelUsersComponent implements OnInit {
         if(this.currentUser.friendsList.length > 1){
           for (let x of this.currentUser.friendsList){
             if (data['_id'] == x){
-              this.errors = 'You the same friend twice!'
+              this.errors = 'You added the same friend twice!'
               console.log(this.errors);
               return this.errors;
             }
@@ -78,7 +80,6 @@ export class ChannelUsersComponent implements OnInit {
           }
         }
         else {
-          console.log('stuff');
           this.errors = null;
           let new_friend = {
             id: this.currentUser.id,
@@ -87,7 +88,6 @@ export class ChannelUsersComponent implements OnInit {
           };
           let friend = this._httpService.updateUser(new_friend);
           friend.subscribe(data => {
-            console.log(data);
             this.updateCurrentUser();
           });
         }
@@ -108,6 +108,8 @@ export class ChannelUsersComponent implements OnInit {
         dm_channels: data["dm_channels"],
         friendsList: data["friendsList"]
       };
+      console.log(data);
+      this.getFriends();
     });
   }
 
@@ -126,7 +128,6 @@ export class ChannelUsersComponent implements OnInit {
           });
         });
       }
-      console.log(this.allFriends);
     }
     else {
       console.log('you have no friends');
@@ -158,7 +159,6 @@ export class ChannelUsersComponent implements OnInit {
     this.chatShow = true;
     let findChat = this._httpService.getOneUser(id);
     findChat.subscribe(data => {
-      console.log(data);
       this.chatFriend = {
         id: data['_id'],
         username: data["username"],
@@ -168,8 +168,8 @@ export class ChannelUsersComponent implements OnInit {
         for(var j of this.currentUser.dm_channels){
           if (x == j){
             //SAVE CHAT ID IN VARIABLE FOR LATER USE
-            this.privateChat = j;
             this.findChat(j);
+            return this.privateChat;
           }
           else {
             console.log('You have no private chat :(');
@@ -186,8 +186,9 @@ export class ChannelUsersComponent implements OnInit {
     mainChat.subscribe(data => {
       let actualChat = this._httpService.getOneText(data["textChannels"])
       actualChat.subscribe(textChat => {
-        console.log(textChat, "WE DID IT")
         this.messages = textChat["messages"];
+        this.privateChat = textChat["_id"];
+        this.form_message['T_id'] = textChat["_id"];
       });
     })
   }
@@ -198,13 +199,18 @@ export class ChannelUsersComponent implements OnInit {
   }
 
   sendPvtMsg(post){
+    post.T_id = this.privateChat;
     let msg = this._httpService.updateTextChannel(post);
     msg.subscribe(data => {
       if('errors' in data){
         console.log(data)
       }
       else {
-        //make get message function here
+        //make get() message function here
+        let actualChat = this._httpService.getOneText(data['_id'])
+        actualChat.subscribe(textChat => {
+          this.messages = textChat["messages"];
+        });
 
         //reset form data
         this.form_message = this.fb.group({
@@ -214,10 +220,18 @@ export class ChannelUsersComponent implements OnInit {
           userName: this.currentUser.username,
           userAvatar: this.currentUser.avatar
         });
+        // grab the text ID for rerender
+        this.MESSAGECHAT = data['_id'];
         //socket function
         this.chat.sendMsg("testmsg")
       }
     })
   }
 
+  reloadModal(){
+    let actualChat = this._httpService.getOneText(this.MESSAGECHAT)
+      actualChat.subscribe(textChat => {
+        this.messages = textChat["messages"];
+      });
+  }
 }
