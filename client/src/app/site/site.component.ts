@@ -18,6 +18,8 @@ export class SiteComponent implements OnInit {
   showRegistration = false;
   showLogin = false;
   popCat: any;
+  catAnimation: any;
+  catIntroCompleted: Boolean;
   getStartedHover: any;
   constructor(
     private _httpService: HttpService,
@@ -41,24 +43,74 @@ export class SiteComponent implements OnInit {
       email: "",
       password:""
     }
+
+    //Animation
+    this.catIntroCompleted = false;
+    console.log("reset to false...>");
   }
   
   ngAfterViewInit() {
     this.popCat = anime({
       targets: '#chappy-cat',
       translateY: [
-        { value: -200, duration: 0 },
         { value: 100, duration: 4000},
         { value: 0, duration: 1000}
       ],
-      duration: 10000
+      duration: 10000,
+      complete: this.setIntroComplete()
     })
+  }
+  
+  setIntroComplete(){
+    this.catIntroCompleted = true;
+    console.log("animation completed",this.catIntroCompleted);
   }
 
   animateCat() {
     this.popCat.play();
   }
 
+  petCat() {
+    console.log("pet da cat");
+    if(this.catIntroCompleted == true) {
+      let cat = document.getElementById("chappy-cat");
+      anime.remove(cat);
+      anime({
+        targets: '#chappy-cat',
+        translateY: [
+          { value: 20, duration: 250 },
+          { value: 15, duration: 500 }
+        ],
+        duration: 1000
+      })
+    }
+  }
+  
+  mouseEnterCat(){
+    if(this.catIntroCompleted == true) {
+      let cat = document.getElementById("chappy-cat");
+      anime.remove(cat);
+      this.catAnimation = anime({
+        targets: '#chappy-cat',
+        translateY: 15,
+        duration: 750
+      })
+    }
+  }
+
+  mouseLeaveCat(){
+    if(this.catIntroCompleted == true) {
+      let cat = document.getElementById("chappy-cat");
+      anime.remove(cat);
+      this.catAnimation = anime({
+        targets: '#chappy-cat',
+        translateY: 0,
+        duration: 1000
+      })
+    }
+  }
+
+  //Button animations
   mouseEnterGetStarted() {
     let btn = document.getElementById("get-started");
     anime.remove(btn);
@@ -75,6 +127,79 @@ export class SiteComponent implements OnInit {
       targets: '#get-started',
       scale: 1,
       duration: 1000
+    })
+  }
+
+  openMouseEnter(){
+    let btn = document.getElementById("open-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#open-btn',
+      scale: 1.1,
+      duration: 500
+    })
+  }
+  openMouseLeave(){
+    let btn = document.getElementById("open-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#open-btn',
+      scale: 1,
+      duration: 500
+    })
+  }
+  loginMouseEnter(){
+    let btn = document.getElementById("login-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#login-btn',
+      scale: 1.1,
+      duration: 500
+    })
+  }
+  loginMouseLeave(){
+    let btn = document.getElementById("login-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#login-btn',
+      scale: 1,
+      duration: 500
+    })
+  }
+  regMouseEnter(){
+    let btn = document.getElementById("register-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#register-btn',
+      scale: 1.1,
+      duration: 500
+    })
+  }
+  regMouseLeave(){
+    let btn = document.getElementById("register-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#register-btn',
+      scale: 1,
+      duration: 500
+    })
+  }
+  logoutMouseEnter(){
+    let btn = document.getElementById("logout-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#logout-btn',
+      scale: 1.1,
+      duration: 500
+    })
+  }
+  logoutMouseLeave(){
+    let btn = document.getElementById("logout-btn");
+    anime.remove(btn);
+    this.getStartedHover = anime({
+      targets: '#logout-btn',
+      scale: 1,
+      duration: 500
     })
   }
 
