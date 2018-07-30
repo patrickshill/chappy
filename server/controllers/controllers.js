@@ -187,12 +187,6 @@ function updateChannel(req,res) {
         .catch(errs => res.json(errs));
         return this;
     }
-    if ('voiceChannel' in req.body){
-        // models.Channels.findByIdAndUpdate(req.body.id, {$push: {voiceChannels: req.body._id }})
-        // .then(data => res.json(data))
-        // .catch(errs => res.json(errs));
-        console.log('unfinished add voice')
-    }
     if ('channelName' in req.body){
         // models.Channels.findByIdAndUpdate(req.body.id, req.body)
         // .then(data => res.json(data))
@@ -214,11 +208,6 @@ function removeFromChannels(req,res){
     }
     if ('Tid' in req.body){
         models.Channels.findByIdAndUpdate(req.params.id, {$pull: {textChannels: {_id: req.body.Tid} }})
-        .then(data => res.json(data))
-        .catch(errs => res.json(errs));
-    }
-    if ('Vid' in req.body){
-        models.Channels.findByIdAndUpdate(req.params.id, {$pull: {voiceChannels: {_id: req.body.Vid} }})
         .then(data => res.json(data))
         .catch(errs => res.json(errs));
     }
@@ -283,72 +272,6 @@ function updateTextChannel(req,res) {
     }
 }
 
-// Create Voice Channel
-function createVoiceChannel(req,res) {
-    models.VoiceChannels.create(req.body)
-    .then(data => res.json(data))
-    .catch(errs => res.json(errs));
-}
-
-// Find all Voice Channels
-function getVoiceChannels(req,res) {
-    models.VoiceChannels.find({}).sort({channelName: 'ascending'})
-    .then(data => res.json(data))
-    .catch(errs => res.json(errs));
-}
-
-// Get One Channel
-function getOneVoice(req,res) {
-    models.VoiceChannels.findById(req.params.id)
-    .then(data => res.json(data))
-    .catch(errs => res.json(errs));
-}
-
-// Update Voice Channel (add or remove user, or update name or port)
-function updateVoiceChannel(req,res) {
-    if ('content' in req.body){
-
-        models.Users.findById(req.body.U_id)
-        .then(user => {
-            models.Messages.create(req.body)
-            .then(data => {
-                data.userName = user.username;
-                data.userAvater = user.avatar;
-                if (req.body.attachments.length > 1){
-                    data.attachments.push(req.body.attachments)
-                }
-                data.save();
-                return data;
-            })
-            .then(message => {
-                models.VoiceChannels.findByIdAndUpdate({_id: req.params.id})
-                .then(data => {
-                    data.messages.push(message);
-                    data.save();
-                    res.json(data);
-                })
-                .catch(errs => res.json(errs));
-            })
-        })
-        .catch(errs=>res.json(errs))
-        
-    }
-    if ('U_id' in req.body){
-        models.VoiceChannels.findByIdAndUpdate({_id: req.params.id}, {$pull: {connectedUsers: {_id: req.body.U_id}}})
-        .then(data => res.json(data))
-        .catch(errs => res.json(errs));
-    }
-    else{
-        models.TextChannels.findById({_id: req.params.id})
-        .then(data => {
-            data.channelName = req.body.channelName;
-            data.save();
-            res.json(data)})
-        .catch(errs => res.json(errs));
-    }
-}
-
-
 module.exports = {
     createUser: createUser,
     loginUser: loginUser,
@@ -371,10 +294,4 @@ module.exports = {
     getTextChannels: getTextChannels,
     getOneText: getOneText,
     updateTextChannel: updateTextChannel,
-
-    createVoiceChannel: createVoiceChannel,
-    getVoiceChannels: getVoiceChannels,
-    getOneVoice: getOneVoice,
-    updateVoiceChannel: updateVoiceChannel,
-
 }

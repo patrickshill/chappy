@@ -10,6 +10,8 @@ import anime from 'animejs';
   styleUrls: ['./site.component.css']
 })
 export class SiteComponent implements OnInit {
+
+  // Variables
   logged: any;
   regForm: any;
   loginForm: any;
@@ -21,6 +23,7 @@ export class SiteComponent implements OnInit {
   catAnimation: any;
   catIntroCompleted: Boolean;
   getStartedHover: any;
+
   constructor(
     private _httpService: HttpService,
     private _route: ActivatedRoute,
@@ -28,6 +31,7 @@ export class SiteComponent implements OnInit {
     private localStorage: LocalStorageService
   ) { }
 
+  // Set variables for html use on initialization
   ngOnInit() {
     this.logged = this.localStorage.retrieve('logged');
     this.regErrors = [];
@@ -49,6 +53,7 @@ export class SiteComponent implements OnInit {
     console.log("reset to false...>");
   }
   
+  //To be ran after page initializes.
   ngAfterViewInit() {
     this.popCat = anime({
       targets: '#chappy-cat',
@@ -61,15 +66,18 @@ export class SiteComponent implements OnInit {
     })
   }
   
+  //Completes animation and stops chappy from moving
   setIntroComplete(){
     this.catIntroCompleted = true;
     console.log("animation completed",this.catIntroCompleted);
   }
 
+  //Runs chappy's animations!
   animateCat() {
     this.popCat.play();
   }
 
+  //who wouldn't want to pet chappy? Give it a try!
   petCat() {
     if(this.catIntroCompleted == true) {
       let cat = document.getElementById("chappy-cat");
@@ -85,6 +93,7 @@ export class SiteComponent implements OnInit {
     }
   }
   
+  //Animation when user moves cursor over chappy
   mouseEnterCat(){
     if(this.catIntroCompleted == true) {
       let cat = document.getElementById("chappy-cat");
@@ -97,6 +106,7 @@ export class SiteComponent implements OnInit {
     }
   }
 
+  //Animation when user moves cursor off chappy
   mouseLeaveCat(){
     if(this.catIntroCompleted == true) {
       let cat = document.getElementById("chappy-cat");
@@ -119,6 +129,7 @@ export class SiteComponent implements OnInit {
       duration: 1000
     })
   }
+
   mouseLeaveGetStarted() {
     let btn = document.getElementById("get-started");
     anime.remove(btn);
@@ -265,6 +276,7 @@ export class SiteComponent implements OnInit {
     })
   }
 
+  //Logout
   logoutUser(){
     this.localStorage.clear();
     this.localStorage.store('logged', false);

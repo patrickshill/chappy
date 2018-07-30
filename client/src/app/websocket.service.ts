@@ -20,6 +20,9 @@ export class WebsocketService {
 
     // define observable which observes incoming messages from socket.io server
     let observable = new Observable(observer => {
+      
+      // When a 'message' is emitted from server, the messages will reload in both
+      // the biz and private message components.
       this.socket.on('message', (data) => {
         console.log("Received message from Websocket Server")
         this.bizComponent.getMessages();
@@ -38,9 +41,7 @@ export class WebsocketService {
     };
 
     // return Rx.subject which is a combination of oberserver and observable.
-
     return Rx.Subject.create(observer, observable);
   }
-
 
 }

@@ -12,6 +12,7 @@ import { LocalStorageService } from '../../../node_modules/ngx-webstorage';
 })
 export class ChannelsComponent implements OnInit {
 
+  // Variables
   user = this.localStorage.retrieve('user');
   channel: any;
   abb_channel: Object[];
@@ -56,6 +57,8 @@ export class ChannelsComponent implements OnInit {
     this.showCreate = false;
   }
   
+  //update current user and local storage after a new channel is added
+  //necessary for congruency across apps in this platform.
   updateUser(){
     let obs = this._httpService.getOneUser(this.user.id);
     obs.subscribe(data=> {
@@ -94,6 +97,7 @@ export class ChannelsComponent implements OnInit {
     this._httpService.showSub(id);
   }
 
+  // Show a general channel named Chappy. Hard coded for visibility across all users.
   getMain(){
     this._httpService.showSub("5b5a13f1da275949507f8596");
   }

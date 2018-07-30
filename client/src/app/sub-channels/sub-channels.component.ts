@@ -26,10 +26,11 @@ export class SubChannelsComponent implements OnInit {
     this.getSubChannels();
   }
 
+  //Get subchannels from the main channel provided
+  //###Refactor code to get rid of for loop and test###
   getSubChannels(){
     this.subchannels = [];
     this.textchannels = [];
-    this.voicechannels = [];
     let channel = this._httpService.getOneChannel(this._httpService.channel_id);
     channel.subscribe(data => {
       if("errors" in data){
@@ -38,7 +39,6 @@ export class SubChannelsComponent implements OnInit {
       else {
         this.channelName = data["channelName"];
         this.textchannels = data["textChannels"];
-        this.voicechannels = data["voiceChannels"];
         for (let j in this.textchannels){
           let sub = this._httpService.getOneText(this.textchannels[j]);
           sub.subscribe(data => {
@@ -54,6 +54,7 @@ export class SubChannelsComponent implements OnInit {
     this._httpService.subChat(id);
   }
 
+  // Add sub channel to main channel group
   addSubChannel(){
     let new_channel = this._httpService.addToChannel(this.newSub);
     new_channel.subscribe(data => {
@@ -66,10 +67,11 @@ export class SubChannelsComponent implements OnInit {
     }
   }
 
+  //show modal
   showCreateModal() {
     this.showCreate = true;
   }
-
+  //hide modal
   hideCreateModal() {
     this.showCreate = false;
   }

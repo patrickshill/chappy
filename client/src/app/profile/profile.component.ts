@@ -9,7 +9,7 @@ import { LocalStorageService } from '../../../node_modules/ngx-webstorage';
 })
 export class ProfileComponent implements OnInit {
 
-
+  // Retrieving user information from local storage for current name display
   user = this.localStorage.retrieve('user')
 
   constructor(private _httpService: HttpService, private localStorage: LocalStorageService) { }

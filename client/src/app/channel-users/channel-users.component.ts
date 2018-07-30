@@ -12,6 +12,7 @@ import { WebsocketService } from '../websocket.service';
 })
 export class ChannelUsersComponent implements OnInit {
   
+  //Variables
   currentUser = this.localStorage.retrieve('user')
   user: any;
   show: Boolean;
@@ -54,7 +55,8 @@ export class ChannelUsersComponent implements OnInit {
     this.messages = [];
   }
 
-
+  // Find users to add to friend's list. Made some validations so a user
+  // may not add themselves, a non-existant user, or the same friend twice.
   findUsers(){
     let users = this._httpService.getUserByName(this.user);
     users.subscribe(data => {
@@ -81,6 +83,7 @@ export class ChannelUsersComponent implements OnInit {
             F_id: data['_id'],
             channelName: "Friend Chat"
           };
+          // Add friend to friends list in db.
           let friend = this._httpService.updateUser(new_friend);
           friend.subscribe(data => {
             this.updateCurrentUser();
@@ -91,6 +94,8 @@ export class ChannelUsersComponent implements OnInit {
     }
   )};
   
+  // Get current user data from the database and update
+  // local storage and variables after adding a friend.
   updateCurrentUser(){
     let update = this._httpService.getOneUser(this.currentUser.id);
     update.subscribe(data => {
@@ -109,6 +114,7 @@ export class ChannelUsersComponent implements OnInit {
     });
   }
 
+  // Set array of friends from DB after local user variables have been updated from DB
   getFriends(){
     this.allFriends = [];
     if (this.currentUser.friendsList.length > 0){
@@ -194,6 +200,8 @@ export class ChannelUsersComponent implements OnInit {
     this.chatShow = false;
   }
 
+  // Sends a private message using post data to the DB
+  // Runs socket function for io.emit live feed updating.
   sendPvtMsg(post){
     post.T_id = this.privateChat;
     let msg = this._httpService.updateTextChannel(post);
@@ -224,6 +232,7 @@ export class ChannelUsersComponent implements OnInit {
     })
   }
 
+  // reloads messages in the modal
   reloadModal(){
     let actualChat = this._httpService.getOneText(this.MESSAGECHAT)
       actualChat.subscribe(textChat => {

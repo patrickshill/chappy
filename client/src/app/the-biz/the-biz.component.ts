@@ -21,11 +21,15 @@ export class TheBizComponent implements OnInit, AfterViewInit {
     this.getMessages(); 
   }
 
+  // After view loads, set the scroll height to move the message list to the very bottom
+  // to allow for a better UX while viewing and sending messages.
   ngAfterViewInit(){
     let chatlog = document.getElementById("chat-content");
     chatlog.scrollTop = chatlog.scrollHeight;
   }
 
+  // Get Messages from sub channel and move chat log to the bottom. 
+  // setTimeout function seemed to be necessary for async lifecycle.
   getMessages(){
     let sub = this._httpService.getOneText(this._httpService.sub_id);
     sub.subscribe(data => {
@@ -39,6 +43,7 @@ export class TheBizComponent implements OnInit, AfterViewInit {
     })
   }
 
+  //#### I see a lot of redundancy. Refactor this component and test####
   scrollDownChat() {
     let chatlog = document.getElementById("chat-content");
     chatlog.scrollTop = chatlog.scrollHeight;

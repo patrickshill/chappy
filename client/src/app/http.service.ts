@@ -99,12 +99,14 @@ export class HttpService {
   }
 
 
+  // Sets main channel group Id to show sub channels of that component
   showSub(id){
     this.channel_id = id;
     this.subComponent.ngOnInit();
   };
 
-
+  // Sets sub channel Id to show messages contained in sub channel upon click.
+  // runs ngOnInit methods for multiple components for DB queries where Sub channel id is
   subChat(id){
     this.sub_id = id;
     this.bizComponent.ngOnInit();
@@ -113,6 +115,7 @@ export class HttpService {
     this.chapp.ngOnInit();
   };
 
+  //Gets messages for the biz component.
   getMessages(){
     this.bizComponent.ngOnInit();
   }

@@ -22,6 +22,7 @@ export class MessageFieldComponent implements OnInit {
   constructor(private _httpService: HttpService, private fb: FormBuilder, private chat: ChatService, private localStorage: LocalStorageService)
   {
     this._httpService.msgField = this;
+    // response from server.
     chat.messages.subscribe(msg => {
       // console.log('response from websocket server')
     })
@@ -33,6 +34,7 @@ export class MessageFieldComponent implements OnInit {
   }
 
   ngOnInit() {
+    //setting formgroup for reactive form so the dom can load w/ established variables
     this.form_message = this.fb.group({
       U_id: this.id,
       content: '',
@@ -41,12 +43,15 @@ export class MessageFieldComponent implements OnInit {
       userAvatar: this.userAvatar
     });
 
+    //message sent over socket
     this.chat.messages.subscribe(msg => {
       this.random_message = msg;
     })
 
   }
 
+  //Updates current sub channel with new message object and user data.
+  //Runs socket function from chatservice to enable realtime chat functionality.
   sendMessage(post){
     let messages = this._httpService.updateTextChannel(post);
     messages.subscribe(data => {
@@ -56,7 +61,7 @@ export class MessageFieldComponent implements OnInit {
       }
       else {
         this._httpService.getMessages();
-        
+        //resets form group for next use
         this.form_message = this.fb.group({
           U_id: this.id,
           content: '',
@@ -66,6 +71,7 @@ export class MessageFieldComponent implements OnInit {
         });
       }
     })
+    //chat socket service function call
     this.chat.sendMsg("testmsg");
   }
 

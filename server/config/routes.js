@@ -72,22 +72,6 @@ function router(app) {
     // Update Text Channel (add or delete message, or update name or port)
     app.post("/api/textchannels/update", api.updateTextChannel);
 
-
-    //###### Voice Sub Channel Routes ######
-
-
-    // Create new voice channel
-    // app.post("/api/voicechannels/new",api.createVoiceChannel);
-
-    // Get all voice channels
-    // app.get("/api/voicechannels", api.getVoiceChannels);
-
-    // Get One voice Channel
-    // app.get("/api/voicechannels/:id", api.getOneVoice);
-
-    // Update voice Channel (add or delete message, or update name or port)
-    // app.patch("/api/voicechannels/update/:id", api.updateVoiceChannel);
-
 }
 
 module.exports = router;
